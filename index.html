@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARCHI20 CREATIVE |  20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIÊN TẠO
+  </title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Thanh điều hướng -->
+  <header class="navbar">
+    <div class="logo">ARCHI20 CREATIVE</div>
+    <nav class="nav-links">
+      <a href="#home">Trang chủ</a>
+      <a href="#products">Cửa hàng</a>
+    </nav>
+    <button class="cart-btn" id="open-cart-btn">
+      Giỏ hàng (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <!-- Banner chính -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="subtitle">CONCEPT STORE</p>
+      <h1>Thời Trang Thiết Kế & Ấn Phẩm Độc Bản</h1>
+      <a href="#products" class="cta-btn">Khám phá ngay</a>
+    </div>
+  </section>
+
+  <!-- Danh sách sản phẩm & Bộ lọc -->
+  <section class="products-section" id="products">
+    <h2 class="section-title">Danh Mục Sản Phẩm</h2>
+
+    <!-- Ô tìm kiếm sản phẩm mới thêm -->
+    <div class="search-container">
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Tìm kiếm  áo,khăn,móc khóa , ..." 
+      />
+    </div>
+
+     <div class="filter-bar">
+      <button class="filter-btn active" data-category="all">Tất cả</button>
+      <button class="filter-btn" data-category="moc-khoa">Móc khóa Archi</button>
+      <button class="filter-btn" data-category="ao">Áo</button>
+      <button class="filter-btn" data-category="tap-chi">Lookbook & Artbook</button>
+      <button class="filter-btn" data-category="poster">Poster & Tranh</button>
+      <button class="filter-btn" data-category="day-deo">Dây đeo thẻ</button>
+    </div>
+    </div>
+
+    <div class="product-grid" id="product-list">
+      <!-- Tự động hiển thị từ script.js -->
+    </div>
+  </section>
+
+  <!-- Cửa sổ Giỏ hàng (Modal) -->
+  <div class="cart-modal" id="cart-modal">
+    <!-- Cửa sổ Chi tiết sản phẩm (Product Modal) -->
+  <div class="product-modal" id="product-modal">
+    <div class="product-modal-content">
+      <button class="close-detail-btn" id="close-product-modal">&times;</button>
+      <div class="product-modal-body" id="product-modal-body">
+        <!-- Nội dung chi tiết sản phẩm sẽ được nạp tự động từ script.js -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+    <div class="cart-content">
+      <div class="cart-header">
+        <h3>Giỏ Hàng Của Bạn</h3>
+        <button class="close-btn" id="close-cart-btn">&times;</button>
+      </div>
+      
+      <div class="cart-items" id="cart-items">
+        <p class="empty-msg">Chưa có sản phẩm nào trong giỏ.</p>
+      </div>
+
+      <div class="cart-footer">
+        <!-- Form nhập thông tin giao hàng mới thêm -->
+        <div class="shipping-form">
+          <h4>Thông Tin Giao Hàng</h4>
+          <input type="text" id="cust-name" placeholder="Họ và tên người nhận *" required>
+          <input type="tel" id="cust-phone" placeholder="Số điện thoại liên hệ *" required>
+          <textarea id="cust-address" rows="2" placeholder="Địa chỉ nhận hàng chi tiết *" required></textarea>
+        </div>
+
+        <div class="total-row">
+          <span>Tổng cộng:</span>
+          <strong id="cart-total">0 ₫</strong>
+        </div>
+        <button class="checkout-btn" id="checkout-btn">Xác Nhận Đặt Hàng</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
