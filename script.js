@@ -176,7 +176,7 @@ const products = [
     ]
   },
   {
-    id: 15,
+    id: 15ss,
     name: "Móc Khóa Len Cookuu",
     price: 65000,
     category: "moc-khoa",
