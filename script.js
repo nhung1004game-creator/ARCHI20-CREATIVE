@@ -66,7 +66,7 @@ const products = [
   {
     id: 5,
     name: "Cúp Lưu Niệm (Mẫu 1)",
-    price: 0,
+    price: 200000,
     category: "trang-tri",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Phiên bản",
@@ -76,17 +76,6 @@ const products = [
   },
   {
     id: 6,
-    name: "Cúp Lưu Niệm (Mẫu 2)",
-    price: 0,
-    category: "trang-tri",
-    badge: "Kỷ niệm 20 năm",
-    optionLabel: "Phiên bản",
-    options: ["Tiêu chuẩn"],
-    description: "Cúp lưu niệm thiết kế độc quyền đánh dấu hành trình 20 năm kiến tạo DAU.",
-    image: "cúp lưu niệm.jpg"
-  },
-  {
-    id: 7,
     name: "Dây Đeo Thẻ DAU",
     price: 40000,
     category: "phu-kien",
@@ -97,7 +86,7 @@ const products = [
     image: "DÂY ĐEO THẺ - 40K.jpg"
   },
   {
-    id: 8,
+    id: 7,
     name: "Ghim Cài Áo Archi",
     price: 15000,
     category: "phu-kien",
@@ -108,7 +97,7 @@ const products = [
     image: "GHIM CÀI 15K.jpg"
   },
   {
-    id: 9,
+    id: 8,
     name: "Móc Khóa Len KTD (Thủ Công)",
     price: 50000,
     category: "moc-khoa",
@@ -142,7 +131,7 @@ const products = [
     image: "ktd1.jpg"
   },
   {
-    id: 10,
+    id: 9,
     name: "Móc Khóa Thông Điệp",
     price: 15000,
     category: "moc-khoa",
@@ -153,7 +142,7 @@ const products = [
     image: "Móc khóa thông điệp 15k_.jpg"
   },
   {
-    id: 11,
+    id: 10,
     name: "Móc Khóa Palet Gỗ",
     price: 10000,
     category: "moc-khoa",
@@ -164,9 +153,9 @@ const products = [
     image: "MÓC PALET 10K .jpg"
   },
   {
-    id: 12,
+    id: 11,
     name: "Mũ Kỷ Niệm 20 Năm",
-    price: 0,
+    price: 60000,
     category: "phu-kien",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Kích cỡ",
@@ -175,18 +164,18 @@ const products = [
     image: "mũ kỉ niệm 20namw.jpg"
   },
   {
-    id: 13,
-    name: "Nón Lá Việt Nam Mini",
+    id: 12,
+    name: "Móc Khóa Nón Lá Việt Nam Mini",
     price: 15000,
-    category: "phu-kien",
+    category: "moc-khoa",
     badge: "",
     optionLabel: "Mẫu",
     options: ["Tiêu chuẩn"],
-    description: "Phụ kiện nón lá Việt Nam trang trí thủ công truyền thống.",
+    description: "Móc khóa nón lá Việt Nam trang trí thủ công truyền thống.",
     image: "NÓN VIỆT NAM - 15K .jpg"
   },
   {
-    id: 14,
+    id: 13,
     name: "Tranh Hoa Nghệ Thuật",
     price: 75000,
     category: "trang-tri",
@@ -202,7 +191,7 @@ const products = [
     ] 
   },
   {
-    id: 15, // Sản phẩm mới được thêm vào hoàn hảo
+    id: 14, // Sản phẩm mới được thêm vào hoàn hảo
     name: "Quạt Cầm Tay",
     price: 20000,
     category: "trang-tri",
@@ -210,10 +199,10 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat  .jpg",
+    image: "quat -.jpg",
     fallbackImages: [
-      "quat  .jpg",
-      "quat.jpg"
+      "quat -.jpg",
+      "quat -.jpg"
     ]
   }
 ];
