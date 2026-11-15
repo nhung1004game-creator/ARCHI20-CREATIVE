@@ -3,52 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARCHI20 CREATIVE | 20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIẾN TẠO</title>
+  <title>ARCHI20 CREATIVE | 20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIÊN TẠO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Thanh thông báo đỉnh trang (Announcement Bar) -->
+  <div class="top-bar">
+    <span>🎉 KỶ NIỆM 20 NĂM DAU: Nhập mã <strong>DAU20</strong> giảm ngay 10% | Miễn phí nhận hàng tại sảnh Khoa Kiến trúc!</span>
+  </div>
 
   <!-- Thanh điều hướng -->
   <header class="navbar">
     <div class="logo">ARCHI20 CREATIVE</div>
     <nav class="nav-links">
       <a href="#home">Trang chủ</a>
-      <a href="#products">Cửa hàng</a>
+      <a href="#products">Ấn phẩm</a>
+      <a href="javascript:void(0)" id="open-orders-btn">Đơn hàng đã đặt</a>
     </nav>
-    <button class="cart-btn" id="open-cart-btn">
-      Giỏ hàng (<span id="cart-count">0</span>)
-    </button>
+    <div class="header-actions">
+      <button class="wishlist-nav-btn" id="filter-wishlist-btn" title="Xem sản phẩm yêu thích">
+        ♥ Yêu thích (<span id="wishlist-count">0</span>)
+      </button>
+      <button class="cart-btn" id="open-cart-btn">
+        Giỏ hàng (<span id="cart-count">0</span>)
+      </button>
+    </div>
   </header>
 
   <!-- Banner chính -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="subtitle">DAU ARCHITECTURE</p>
-      <h1>20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIẾN TẠO</h1>
-      <a href="#products" class="cta-btn">Khám phá ngay</a>
+      <p class="subtitle">DAU ARCHITECTURE — EST. 2006</p>
+      <h1>20 YEARS OF CREATIVITY<br>20 NĂM HÀNH TRÌNH KIẾN TẠO</h1>
+      <a href="#products" class="cta-btn">Khám phá bộ sưu tập</a>
     </div>
   </section>
 
-  <!-- Danh sách sản phẩm & Bộ lọc -->
+  <!-- Danh sách sản phẩm & Bộ công cụ lọc/sắp xếp -->
   <section class="products-section" id="products">
-    <h2 class="section-title">Danh Mục Sản Phẩm</h2>
+    <h2 class="section-title">Danh Mục Ấn Phẩm</h2>
 
-    <!-- Ô tìm kiếm sản phẩm -->
-    <div class="search-container">
-      <input 
-        type="text" 
-        id="search-input" 
-        placeholder="Tìm kiếm móc khóa, dây đeo, cúp, tranh..." 
-      />
+    <!-- Thanh công cụ: Tìm kiếm + Sắp xếp -->
+    <div class="toolbar-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Tìm kiếm cúp, móc khóa, dây đeo, tranh..." 
+        />
+      </div>
+      <div class="sort-box">
+        <label for="sort-select">Sắp xếp:</label>
+        <select id="sort-select">
+          <option value="default">Mặc định</option>
+          <option value="price-asc">Giá: Thấp đến Cao</option>
+          <option value="price-desc">Giá: Cao đến Thấp</option>
+          <option value="name-asc">Tên: A - Z</option>
+        </select>
+      </div>
     </div>
 
-    <!-- Thanh bộ lọc đã đồng bộ khớp 100% với script.js -->
+    <!-- Thanh bộ lọc danh mục -->
     <div class="filter-bar">
       <button class="filter-btn active" data-category="all">Tất cả</button>
       <button class="filter-btn" data-category="moc-khoa">Móc khóa Archi</button>
       <button class="filter-btn" data-category="phu-kien">Phụ kiện & Kỷ niệm</button>
       <button class="filter-btn" data-category="trang-tri">Trang trí & Tranh</button>
+      <button class="filter-btn" data-category="wishlist">♥ Đã lưu</button>
     </div>
+
+    <!-- Hiển thị số lượng kết quả -->
+    <div class="results-info" id="results-info">Đang hiển thị ấn phẩm</div>
 
     <div class="product-grid" id="product-list">
       <!-- Tự động hiển thị từ script.js -->
@@ -59,13 +85,11 @@
   <div class="product-modal" id="product-modal">
     <div class="product-modal-content">
       <button class="close-detail-btn" id="close-product-modal">&times;</button>
-      <div class="product-modal-body" id="product-modal-body">
-        <!-- Nội dung chi tiết sản phẩm nạp tự động từ script.js -->
-      </div>
+      <div class="product-modal-body" id="product-modal-body"></div>
     </div>
   </div>
 
-  <!-- Cửa sổ Giỏ hàng (Cart Modal) -->
+  <!-- Cửa sổ Giỏ hàng (Cart Modal) - Đã lược bỏ form thừa -->
   <div class="cart-modal" id="cart-modal">
     <div class="cart-content">
       <div class="cart-header">
@@ -104,13 +128,13 @@
               <input type="text" id="cust-name" placeholder="Họ và tên người nhận *" required>
               <input type="tel" id="cust-phone" placeholder="Số điện thoại liên hệ *" required>
             </div>
-            <input type="email" id="cust-email" placeholder="Email nhận xác nhận đơn hàng (Không bắt buộc)">
+            <input type="email" id="cust-email" placeholder="Email nhận phiếu đặt hàng (Không bắt buộc)">
             
             <label class="field-label">Hình thức nhận hàng:</label>
             <select id="delivery-method" class="checkout-select">
               <option value="Nhận tại sảnh Khoa Kiến trúc - DAU (Miễn phí)">Nhận tại sảnh Khoa Kiến trúc - DAU (Miễn phí ship)</option>
-              <option value="Giao hàng tận nơi tại Đà Nẵng">Giao hàng tận nơi (Nội thành Đà Nẵng)</option>
-              <option value="Giao hàng toàn quốc (ViettelPost / GHTK)">Giao hàng toàn quốc</option>
+              <option value="Giao hàng tận nơi tại Đà Nẵng">Giao hàng tận nơi (Nội thành Đà Nẵng +15.000₫)</option>
+              <option value="Giao hàng toàn quốc (ViettelPost / GHTK)">Giao hàng toàn quốc (+30.000₫)</option>
             </select>
 
             <textarea id="cust-address" rows="2" placeholder="Ghi rõ Lớp/MSSV (nếu nhận tại trường) hoặc Địa chỉ chi tiết *" required></textarea>
@@ -152,17 +176,26 @@
           </div>
         </div>
 
-        <!-- Cột phải: Tóm tắt đơn hàng -->
+        <!-- Cột phải: Tóm tắt đơn hàng & Mã giảm giá -->
         <div class="checkout-right">
           <h4 class="checkout-section-title">Tóm Tắt Đơn Hàng</h4>
-          <div class="checkout-summary-list" id="checkout-summary-list">
-            <!-- Nạp tự động từ script.js -->
+          <div class="checkout-summary-list" id="checkout-summary-list"></div>
+
+          <!-- Ô nhập mã giảm giá chuyên nghiệp -->
+          <div class="promo-box">
+            <input type="text" id="promo-input" placeholder="Nhập mã ưu đãi (VD: DAU20)">
+            <button type="button" id="apply-promo-btn">Áp dụng</button>
           </div>
+          <p class="promo-msg" id="promo-msg"></p>
 
           <div class="checkout-totals">
             <div class="summary-line">
               <span>Tạm tính:</span>
               <span id="summary-subtotal">0 ₫</span>
+            </div>
+            <div class="summary-line">
+              <span>Giảm giá:</span>
+              <span id="summary-discount">- 0 ₫</span>
             </div>
             <div class="summary-line">
               <span>Phí vận chuyển:</span>
@@ -184,22 +217,23 @@
       </div>
     </div>
   </div>
-      <div class="cart-footer">
-        <div class="shipping-form">
-          <h4>Thông Tin Giao Hàng</h4>
-          <input type="text" id="cust-name" placeholder="Họ và tên người nhận *" required>
-          <input type="tel" id="cust-phone" placeholder="Số điện thoại liên hệ *" required>
-          <textarea id="cust-address" rows="2" placeholder="Địa chỉ nhận hàng chi tiết *" required></textarea>
-        </div>
 
-        <div class="total-row">
-          <span>Tổng cộng:</span>
-          <strong id="cart-total">0 ₫</strong>
-        </div>
-        <button class="checkout-btn" id="checkout-btn">Xác Nhận Đặt Hàng</button>
+  <!-- Cửa sổ Biên Lai Đặt Hàng & Lịch Sử Đơn Hàng -->
+  <div class="order-modal" id="order-modal">
+    <div class="order-modal-content">
+      <div class="checkout-header">
+        <h3 id="order-modal-title">Lịch Sử Đơn Hàng Của Bạn</h3>
+        <button class="close-btn" id="close-order-modal">&times;</button>
       </div>
+      <div class="order-modal-body" id="order-modal-body"></div>
     </div>
   </div>
+
+  <!-- Nút Lên đầu trang (Back to Top) -->
+  <button id="back-to-top" title="Lên đầu trang">&uarr;</button>
+
+  <!-- Khung chứa thông báo nổi (Toast Container) -->
+  <div id="toast-container" class="toast-container"></div>
 
   <!-- Chân trang phong cách ARCHI20 - DAU -->
   <footer class="site-footer">
@@ -207,13 +241,19 @@
       <div class="footer-col">
         <h3>ARCHI20 CREATIVE</h3>
         <p>20 Năm Sáng Tạo - 20 Năm Hành Trình Kiến Tạo</p>
-        <p>Trường Đại học Kiến trúc Đà Nẵng (DAU)</p>
+        <p>Khoa Kiến trúc - Trường Đại học Kiến trúc Đà Nẵng (DAU)</p>
+      </div>
+      <div class="footer-col">
+        <h4>Chính Sách & Ưu Đãi</h4>
+        <p>Mã giảm 10% kỷ niệm 20 năm: <strong>DAU20</strong></p>
+        <p>Mã giảm 15K cho sinh viên Khoa: <strong>KIENTRUC</strong></p>
+        <p>Hỗ trợ đổi trả miễn phí tại sảnh Khoa Kiến trúc</p>
       </div>
       <div class="footer-col">
         <h4>Liên Hệ & Đặt Hàng</h4>
         <p>Email: contact@archidau.studio</p>
         <p>Hotline: 0905 123 456</p>
-        <p>Địa chỉ: Sơn Trà, Đà Nẵng</p>
+        <p>Địa chỉ: 566 Núi Thành, Hải Châu / Sơn Trà, Đà Nẵng</p>
       </div>
     </div>
     <div class="footer-bottom">
