@@ -493,6 +493,50 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
     return;
   }
 
+  // LẤY CHÍNH XÁC ẢNH ĐÚNG THEO PHÂN LOẠI HOẶC SẢN PHẨM ĐÓ
+  const finalOptionImage = getProductOptionImage(product, selectedOption) || product.image;
+
+  const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
+
+  if (existingItem && existingItem.quantity >= 20) {
+    showToast(`⛔ Bạn chỉ được mua tối đa 20 sản phẩm loại này!`, true);
+    return;
+  }
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: finalOptionPrice,
+      option: selectedOption,
+      image: finalOptionImage, // Đảm bảo lưu đúng ảnh của sản phẩm này
+      quantity: 1
+    });
+  }
+
+  saveCartToStorage();
+  updateCartUI();
+  showToast(`✓ Đã thêm "${product.name} - ${selectedOption}" vào giỏ!`);
+
+  if (closeModalAfter) {
+    productModal.classList.remove("active");
+    cartModal.classList.add("active");
+  }
+}
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+
+  const selectEl = document.getElementById(selectElementId);
+  const selectedOption = selectEl ? selectEl.value : (product.options[0] || "Tiêu chuẩn");
+  const finalOptionPrice = getProductOptionPrice(product, selectedOption);
+  
+  if (finalOptionPrice === 0) {
+    showToast(`⛔ "${product.name}" đang cập nhật giá, chưa thể đặt hàng!`, true);
+    return;
+  }
+
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
 
   if (existingItem && existingItem.quantity >= 20) {
