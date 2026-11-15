@@ -191,7 +191,7 @@ const products = [
     ] 
   },
   {
-    id: 14, // Sản phẩm mới được thêm vào hoàn hảo
+    id: 14,
     name: "Quạt Cầm Tay",
     price: 20000,
     category: "trang-tri",
@@ -199,11 +199,7 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat .jpg",
-    fallbackImages: [
-      "quat .jpg",
-      "quat.jpg"
-    ]
+    image: "quat .jpg"
   }
 ];
 
@@ -708,10 +704,19 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
     return;
   }
 
-  if (!/^[0-9]{9,11}$/.test(phone)) {
-    showToast("Số điện thoại không hợp lệ (9 - 11 chữ số)!", true);
+  // Tự động dọn dẹp: Xóa khoảng trắng, dấu chấm, dấu gạch ngang nếu khách lỡ tay gõ thừa
+  let cleanPhone = phone.replace(/[\s\.\-\+]/g, '');
+
+  // Ép buộc chuẩn viễn thông: Bắt buộc phải bắt đầu bằng số 0 và có đúng 10 chữ số
+  if (!/^0[0-9]{9}$/.test(cleanPhone)) {
+    showToast("Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số (VD: 0905123456)!", true);
+    // Trải nghiệm tiện nghi: Tự động giật con trỏ chuột về lại đúng ô bị lỗi để khách sửa
+    document.getElementById("cust-phone").focus(); 
     return;
   }
+  
+  // Gán lại số điện thoại sạch vào biến phone để gửi đi
+  phone = cleanPhone;
 
   localStorage.setItem("archi20_customer", JSON.stringify({ name, phone, email, address }));
 
