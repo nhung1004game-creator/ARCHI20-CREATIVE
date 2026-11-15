@@ -737,3 +737,85 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
     showToast("Vui lòng điền đủ Họ tên, SĐT và Địa chỉ/Lớp!", true);
     document.getElementById("cust-name").focus();
     return;
+  }
+
+  if (!/^0[0-9]{9}$/.test(cleanPhone)) {
+    showToast("Số điện thoại không hợp lệ (Bắt buộc 10 số, bắt đầu bằng số 0)!", true);
+    document.getElementById("cust-phone").focus();
+    return;
+  }
+
+  phone = cleanPhone;
+  localStorage.setItem("archi20_customer", JSON.stringify({ name, phone, email, address }));
+
+  const checkoutBtn = document.getElementById("checkout-btn");
+  checkoutBtn.textContent = "ĐANG GỬI ĐƠN HÀNG...";
+  checkoutBtn.disabled = true;
+
+  const orderCode = document.getElementById("qr-memo")?.textContent || ("ARCHI" + Math.floor(1000 + Math.random() * 9000));
+  const orderItemsText = cart.map(item => `- ${item.name} (${item.option}) x ${item.quantity}: ${formatCurrency(item.price * item.quantity)}`).join("\n");
+  const finalTotalText = document.getElementById("summary-total").textContent;
+
+  const newOrder = {
+    code: orderCode,
+    date: new Date().toLocaleString("vi-VN"),
+    name,
+    phone,
+    delivery: deliveryMethod,
+    address,
+    payment: paymentMethod,
+    items: orderItemsText,
+    total: finalTotalText
+  };
+
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: `[ARCHI20] Đơn hàng #${orderCode} từ ${name}`,
+        "Mã đơn hàng": orderCode,
+        "Khách hàng": name,
+        "Số điện thoại": phone,
+        "Email": email || "Không có",
+        "Hình thức nhận": deliveryMethod,
+        "Địa chỉ / Lớp": address,
+        "Thanh toán": paymentMethod,
+        "Ghi chú": note || "Không có",
+        "Sản phẩm": orderItemsText,
+        "Tổng thanh toán": finalTotalText
+      })
+    });
+
+    if (!response.ok) throw new Error("Mạng lỗi");
+
+    orderHistory.unshift(newOrder);
+    localStorage.setItem("archi20_orders", JSON.stringify(orderHistory));
+    cart = [];
+    appliedDiscount = 0;
+    saveCartToStorage();
+    updateCartUI();
+    checkoutModal.classList.remove("active");
+    showToast(`🎉 Đặt hàng thành công! Mã đơn: #${orderCode}`);
+    openOrderHistoryModal();
+
+  } catch (error) {
+    showToast("Đường truyền không ổn định. Vui lòng kiểm tra WiFi/4G và thử lại!", true);
+  } finally {
+    checkoutBtn.textContent = "HOÀN TẤT ĐẶT HÀNG";
+    checkoutBtn.disabled = false;
+  }
+});
+
+const backToTopBtn = document.getElementById("back-to-top");
+window.addEventListener("scroll", () => {
+  if (backToTopBtn) {
+    backToTopBtn.style.display = window.scrollY > 350 ? "block" : "none";
+  }
+});
+backToTopBtn?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+renderProducts();
+updateCartUI();
