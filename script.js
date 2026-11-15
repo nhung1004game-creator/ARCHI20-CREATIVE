@@ -66,7 +66,7 @@ const products = [
   {
     id: 5,
     name: "Cúp Lưu Niệm (Mẫu 1)",
-    price: 200000,
+    price: 0,
     category: "trang-tri",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Phiên bản",
@@ -76,6 +76,17 @@ const products = [
   },
   {
     id: 6,
+    name: "Cúp Lưu Niệm (Mẫu 2)",
+    price: 0,
+    category: "trang-tri",
+    badge: "Kỷ niệm 20 năm",
+    optionLabel: "Phiên bản",
+    options: ["Tiêu chuẩn"],
+    description: "Cúp lưu niệm thiết kế độc quyền đánh dấu hành trình 20 năm kiến tạo DAU.",
+    image: "cúp lưu niệm.jpg"
+  },
+  {
+    id: 7,
     name: "Dây Đeo Thẻ DAU",
     price: 40000,
     category: "phu-kien",
@@ -86,7 +97,7 @@ const products = [
     image: "DÂY ĐEO THẺ - 40K.jpg"
   },
   {
-    id: 7,
+    id: 8,
     name: "Ghim Cài Áo Archi",
     price: 15000,
     category: "phu-kien",
@@ -97,7 +108,7 @@ const products = [
     image: "GHIM CÀI 15K.jpg"
   },
   {
-    id: 8,
+    id: 9,
     name: "Móc Khóa Len KTD (Thủ Công)",
     price: 50000,
     category: "moc-khoa",
@@ -131,7 +142,7 @@ const products = [
     image: "ktd1.jpg"
   },
   {
-    id: 9,
+    id: 10,
     name: "Móc Khóa Thông Điệp",
     price: 15000,
     category: "moc-khoa",
@@ -142,7 +153,7 @@ const products = [
     image: "Móc khóa thông điệp 15k_.jpg"
   },
   {
-    id: 10,
+    id: 11,
     name: "Móc Khóa Palet Gỗ",
     price: 10000,
     category: "moc-khoa",
@@ -153,9 +164,9 @@ const products = [
     image: "MÓC PALET 10K .jpg"
   },
   {
-    id: 11,
+    id: 12,
     name: "Mũ Kỷ Niệm 20 Năm",
-    price: 60000,
+    price: 0,
     category: "phu-kien",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Kích cỡ",
@@ -164,18 +175,18 @@ const products = [
     image: "mũ kỉ niệm 20namw.jpg"
   },
   {
-    id: 12,
-    name: "Móc Khóa Nón Lá Việt Nam Mini",
+    id: 13,
+    name: "Nón Lá Việt Nam Mini",
     price: 15000,
-    category: "moc-khoa",
+    category: "phu-kien",
     badge: "",
     optionLabel: "Mẫu",
     options: ["Tiêu chuẩn"],
-    description: "Móc khóa nón lá Việt Nam trang trí thủ công truyền thống.",
+    description: "Phụ kiện nón lá Việt Nam trang trí thủ công truyền thống.",
     image: "NÓN VIỆT NAM - 15K .jpg"
   },
   {
-    id: 13,
+    id: 14,
     name: "Tranh Hoa Nghệ Thuật",
     price: 75000,
     category: "trang-tri",
@@ -188,10 +199,10 @@ const products = [
       "Tranh hoa -75k .jpg",
       "Tranh hoa -75k.jpg",
       "Tranh hoa -70k .jpg"
-    ] 
+    ]
   },
   {
-    id: 14,
+    id: 15,
     name: "Quạt Cầm Tay",
     price: 20000,
     category: "trang-tri",
@@ -199,7 +210,33 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat .jpg"
+    image: "quat.jpg"
+  },
+  {
+    id: 16,
+    name: "Móc Khóa Len Cookuu",
+    price: 65000,
+    category: "moc-khoa",
+    badge: "Mới",
+    optionLabel: "Chọn mẫu",
+    options: [
+      "Áo đồng phục (65K)",
+      "Đầu basic (50K)"
+    ],
+    optionPrices: {
+      "Áo đồng phục (65K)": 65000,
+      "Đầu basic (50K)": 50000
+    },
+    optionImages: {
+      "Áo đồng phục (65K)": "móc khóa cookuu áo đồng phục 65k.jpg",
+      "Đầu basic (50K)": "móc khóa cookuu đầu basic.jpg"
+    },
+    fallbackImages: [
+      "móc khóa cookuu áo đồng phục 65k.jpg",
+      "móc khóa cookuu đầu basic.jpg"
+    ],
+    description: "Móc khóa len đan thủ công hình mascot Cookuu cực kỳ đáng yêu, mang đậm chất sinh viên Kiến trúc.",
+    image: "móc khóa cookuu áo đồng phục 65k.jpg"
   }
 ];
 
@@ -230,10 +267,11 @@ filterButtons.forEach(btn => {
   btn.classList.toggle("active", btn.getAttribute("data-category") === currentCategory);
 });
 
+// Cấu hình ngân hàng & Đồng bộ Email nhận đơn
 const BANK_ID = "MB";
 const ACCOUNT_NO = "0905123456";
 const ACCOUNT_NAME = "PHAM HONG NHUNG";
-const YOUR_EMAIL = "email_cua_ban@gmail.com";
+const YOUR_EMAIL = "khoakientrucstu@gmail.com"; 
 
 const bankLabel = document.getElementById("bank-label");
 const accNoLabel = document.getElementById("acc-no-label");
@@ -692,32 +730,28 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   if (cart.length === 0) return;
 
   const name = document.getElementById("cust-name").value.trim();
-  const phone = document.getElementById("cust-phone").value.trim();
+  let phone = document.getElementById("cust-phone").value.trim();
   const address = document.getElementById("cust-address").value.trim();
   const email = document.getElementById("cust-email")?.value.trim() || "";
   const note = document.getElementById("cust-note")?.value.trim() || "";
   const deliveryMethod = deliveryMethodSelect.value;
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
-  if (!name || !phone || !address) {
-    showToast("Vui lòng điền đủ Họ tên, SĐT và Địa chỉ/Lớp!", true);
-    return;
-  }
-
-  // Tự động dọn dẹp: Xóa khoảng trắng, dấu chấm, dấu gạch ngang nếu khách lỡ tay gõ thừa
   let cleanPhone = phone.replace(/[\s\.\-\+]/g, '');
 
-  // Ép buộc chuẩn viễn thông: Bắt buộc phải bắt đầu bằng số 0 và có đúng 10 chữ số
-  if (!/^0[0-9]{9}$/.test(cleanPhone)) {
-    showToast("Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số (VD: 0905123456)!", true);
-    // Trải nghiệm tiện nghi: Tự động giật con trỏ chuột về lại đúng ô bị lỗi để khách sửa
-    document.getElementById("cust-phone").focus(); 
+  if (!name || !cleanPhone || !address) {
+    showToast("Vui lòng điền đủ Họ tên, SĐT và Địa chỉ/Lớp!", true);
+    document.getElementById("cust-name").focus();
     return;
   }
-  
-  // Gán lại số điện thoại sạch vào biến phone để gửi đi
-  phone = cleanPhone;
 
+  if (!/^0[0-9]{9}$/.test(cleanPhone)) {
+    showToast("Số điện thoại không hợp lệ (Bắt buộc 10 số, bắt đầu bằng số 0)!", true);
+    document.getElementById("cust-phone").focus();
+    return;
+  }
+
+  phone = cleanPhone;
   localStorage.setItem("archi20_customer", JSON.stringify({ name, phone, email, address }));
 
   const checkoutBtn = document.getElementById("checkout-btn");
