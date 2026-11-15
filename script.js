@@ -28,26 +28,14 @@ const products = [
     category: "phu-kien",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Kích cỡ",
-    options: ["S", "M", "L", "XL", "XXL"],
-    description: "Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.",
+    options: ["S", "M", "L", "XL", "2XL", "3XL"],
+    description: `Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.<br>
+    <img src="bang-size.jpg" alt="Bảng hướng dẫn chọn size áo" style="width: 100%; margin-top: 10px; border-radius: 6px; border: 1px solid #e5dec9; cursor: zoom-in;" onclick="window.open(this.src, '_blank')" title="Bấm vào ảnh để phóng to" onerror="this.src='bang-size.png'">`,
     image: "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
-    // Danh sách tự động dò đúng tên file áo polo bị khuất sau dấu ... trong thư mục của bạn
     fallbackImages: [
       "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
       "áo polo trường đại học kiến trúc đà nẵng 175K.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 175k .jpg",
-      "áo polo trường đại học kiến trúc đà nẵng - 175k.jpg",
       "áo polo trường đại học kiến trúc đà nẵng 150k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 150K.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 150k .jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 120k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 180k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 160k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 140k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 130k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 100k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng 190k.jpg",
-      "áo polo trường đại học kiến trúc đà nẵng (1).jpg",
       "áo polo trường đại học kiến trúc đà nẵng 1.jpg",
       "ao-polo.jpg",
       "polo.jpg"
@@ -135,18 +123,23 @@ const products = [
       "Móc khóa KTD 2 (40K)": 40000
     },
     optionImages: {
-      "Móc khóa KTD 1 (50K)": "móc khóa KTD 1 .jpg",
+      "Móc khóa KTD 1 (50K)": "ktd1.jpg",
       "Móc khóa KTD 2 (40K)": "móc khóa ktd 2.png"
     },
     fallbackImages: [
+      "ktd1.jpg",
+      "ktd1.png",
       "móc khóa KTD 1 .jpg",
       "móc khóa KTD 1.jpg",
-      "ktd1.jpg",
-      "móc khóa ktd 2.png",
-      "móc khóa ktd 2.jpg"
+      "móc khóa ktd 1 .jpg",
+      "móc khóa ktd 1.jpg",
+      "móc khóa KTD 1 .png",
+      "móc khóa KTD 1.png",
+      "móc khóa KTD 1 .jpg",
+      "móc khóa KTD 1.jpg"
     ],
     description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
-    image: "móc khóa KTD 1 .jpg"
+    image: "ktd1.jpg"
   },
   {
     id: 10,
@@ -206,7 +199,17 @@ const products = [
       "Tranh hoa -75k .jpg",
       "Tranh hoa -75k.jpg",
       "Tranh hoa -70k .jpg"
-    ]
+  },
+  {
+    id: 15,
+    name: "Quạt Cầm Tay ",
+    price: 20000,
+    category: "trang-tri",
+    badge: "Kỷ niệm 20 năm",
+    optionLabel: "Phiên bản",
+    options: ["Đỏ - Trắng DAU"],
+    description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
+    image: "quat  .jpg"
   }
 ];
 
@@ -214,7 +217,9 @@ let cart = JSON.parse(localStorage.getItem("aura_concept_cart")) || [];
 let wishlist = JSON.parse(localStorage.getItem("archi20_wishlist")) || [];
 let orderHistory = JSON.parse(localStorage.getItem("archi20_orders")) || [];
 
-let currentCategory = "all";
+// NÂNG CẤP: Đọc tham số URL để thiết lập bộ lọc mặc định khi tải trang
+const urlParams = new URLSearchParams(window.location.search);
+let currentCategory = urlParams.get('category') || "all";
 let searchKeyword = "";
 let currentSort = "default";
 let appliedDiscount = 0;
@@ -232,7 +237,11 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("search-input");
 const sortSelect = document.getElementById("sort-select");
 
-// CẤU HÌNH NGÂN HÀNG VIETQR & EMAIL NHẬN ĐƠN
+// Đồng bộ giao diện nút bấm với tham số URL
+filterButtons.forEach(btn => {
+  btn.classList.toggle("active", btn.getAttribute("data-category") === currentCategory);
+});
+
 const BANK_ID = "MB";
 const ACCOUNT_NO = "0905123456";
 const ACCOUNT_NAME = "PHAM HONG NHUNG";
@@ -264,41 +273,36 @@ function getProductOptionImage(product, selectedOption) {
   return product.image;
 }
 
-// Hàm cập nhật CẢ GIÁ VÀ HÌNH ẢNH khi khách chọn phân loại
 function updateProductVariant(productId, selectEl, priceElementId, imgElementId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
   const selectedOpt = selectEl.value;
 
-  // 1. Cập nhật giá
   const newPrice = getProductOptionPrice(product, selectedOpt);
   const priceEl = document.getElementById(priceElementId);
   if (priceEl) {
     priceEl.textContent = formatCurrency(newPrice);
   }
 
-  // 2. Cập nhật hình ảnh đúng theo phân loại
   const newImgSrc = getProductOptionImage(product, selectedOpt);
   const imgEl = document.getElementById(imgElementId);
   if (imgEl && newImgSrc) {
-    imgEl.dataset.retry = "0"; // Reset bộ đếm thử lại ảnh
+    imgEl.dataset.retry = "0";
+    imgEl.dataset.originalSrc = newImgSrc;
     imgEl.src = newImgSrc;
   }
 }
 
-// Hàm tự động xử lý lỗi tên file ảnh RIÊNG BIỆT cho từng sản phẩm (Không bao giờ lấy nhầm ảnh sản phẩm khác)
-function handleImageError(imgEl, productId, currentImgName) {
+function handleImageError(imgEl, productId) {
   const product = products.find(p => p.id === productId);
-  const baseName = currentImgName || (product ? product.image : "");
+  const baseName = imgEl.dataset.originalSrc || (product ? product.image : "");
   if (!baseName) return;
 
   const customFallbacks = (product && product.fallbackImages) ? product.fallbackImages : [];
-
-  // Chỉ thử các biến thể dấu cách hoặc đuôi .jpg/.png của CHÍNH bức ảnh đó
   const rawAttempts = [
     baseName,
-    baseName.replace(/\s+\./g, "."), // Xóa khoảng trắng thừa trước dấu chấm
-    baseName.replace(/\.(jpg|png|jpeg)$/i, " .$1"), // Thêm khoảng trắng trước dấu chấm nếu file gốc có
+    baseName.replace(/\s+\./g, "."), 
+    baseName.replace(/\.(jpg|png|jpeg)$/i, " .$1"), 
     ...customFallbacks,
     baseName.replace(/\.jpg$/i, ".png"),
     baseName.replace(/\.png$/i, ".jpg"),
@@ -306,26 +310,24 @@ function handleImageError(imgEl, productId, currentImgName) {
     baseName.replace(/\s+\./g, ".").replace(/\.png$/i, ".jpg")
   ];
 
-  // Loại bỏ các tên trùng lặp
   const attempts = [...new Set(rawAttempts)];
-
   let step = parseInt(imgEl.dataset.retry || "0", 10) + 1;
+  
   if (step < attempts.length) {
     imgEl.dataset.retry = step;
     imgEl.src = attempts[step];
   }
 }
 
-function showToast(message) {
+function showToast(message, isError = false) {
   const container = document.getElementById("toast-container");
   if (!container) return;
   const toast = document.createElement("div");
   toast.className = "toast";
+  if (isError) toast.style.backgroundColor = "#d93025"; // Đỏ báo lỗi
   toast.textContent = message;
   container.appendChild(toast);
-  setTimeout(() => {
-    toast.remove();
-  }, 2800);
+  setTimeout(() => toast.remove(), 2800);
 }
 
 function saveCartToStorage() {
@@ -333,12 +335,7 @@ function saveCartToStorage() {
 }
 
 function removeVietnameseTones(str) {
-  return (str || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D")
-    .toLowerCase();
+  return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
 }
 
 function toggleWishlist(productId, event) {
@@ -353,7 +350,6 @@ function toggleWishlist(productId, event) {
     wishlist.push(productId);
     showToast(`♥ Đã lưu "${product.name}" vào Yêu thích!`);
   }
-
   localStorage.setItem("archi20_wishlist", JSON.stringify(wishlist));
   if (wishlistCountEl) wishlistCountEl.textContent = wishlist.length;
   renderProducts();
@@ -371,17 +367,11 @@ function renderProducts() {
     return matchCategory && matchName;
   });
 
-  if (currentSort === "price-asc") {
-    filtered.sort((a, b) => (a.price || 9999999) - (b.price || 9999999));
-  } else if (currentSort === "price-desc") {
-    filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
-  } else if (currentSort === "name-asc") {
-    filtered.sort((a, b) => a.name.localeCompare(b.name, "vi"));
-  }
+  if (currentSort === "price-asc") filtered.sort((a, b) => (a.price || 9999999) - (b.price || 9999999));
+  else if (currentSort === "price-desc") filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
+  else if (currentSort === "name-asc") filtered.sort((a, b) => a.name.localeCompare(b.name, "vi"));
 
-  if (resultsInfoEl) {
-    resultsInfoEl.textContent = `Đang hiển thị ${filtered.length} ấn phẩm`;
-  }
+  if (resultsInfoEl) resultsInfoEl.textContent = `Đang hiển thị ${filtered.length} ấn phẩm`;
 
   if (filtered.length === 0) {
     productListEl.innerHTML = `<p class="no-result">Không tìm thấy ấn phẩm nào phù hợp.</p>`;
@@ -395,7 +385,6 @@ function renderProducts() {
     const initialOption = optionsList[0];
     const initialPrice = getProductOptionPrice(product, initialOption);
     const initialImage = getProductOptionImage(product, initialOption);
-    const safeImgName = initialImage.replace(/'/g, "\\'");
     const isLiked = wishlist.includes(product.id);
 
     return `
@@ -405,14 +394,7 @@ function renderProducts() {
           ${isLiked ? '♥' : '♡'}
         </button>
         <div class="product-img-wrapper" onclick="openProductModal(${product.id})">
-          <img 
-            src="${initialImage}" 
-            alt="${product.name}" 
-            class="product-img"
-            id="img-card-${product.id}"
-            loading="lazy"
-            onerror="handleImageError(this, ${product.id}, '${safeImgName}')"
-          >
+          <img src="${initialImage}" alt="${product.name}" class="product-img" id="img-card-${product.id}" loading="lazy" data-original-src="${initialImage}" onerror="handleImageError(this, ${product.id})">
         </div>
         <div class="product-info">
           <div>
@@ -445,32 +427,25 @@ function openProductModal(productId) {
   const badgeHtml = product.badge ? `<span class="modal-badge">${product.badge}</span>` : "";
   const descText = product.description || "Ấn phẩm thuộc bộ sưu tập kỷ niệm 20 năm ARCHI20 CREATIVE - Đại học Kiến trúc Đà Nẵng.";
   
-  // Lấy phân loại đang được chọn ở ngoài thẻ sản phẩm (nếu có)
   const cardSelect = document.getElementById(`opt-${product.id}`);
   const currentSelectedOpt = cardSelect ? cardSelect.value : optionsList[0];
 
   const initialPrice = getProductOptionPrice(product, currentSelectedOpt);
   const initialImage = getProductOptionImage(product, currentSelectedOpt);
-  const safeImgName = initialImage.replace(/'/g, "\\'");
 
   productModalBody.innerHTML = `
-    <img 
-      src="${initialImage}" 
-      alt="${product.name}" 
-      class="modal-img"
-      id="img-modal-${product.id}"
-      loading="lazy"
-      onerror="handleImageError(this, ${product.id}, '${safeImgName}')"
-    >
+    <img src="${initialImage}" alt="${product.name}" class="modal-img" id="img-modal-${product.id}" loading="lazy" data-original-src="${initialImage}" onerror="handleImageError(this, ${product.id})">
     <div class="modal-details">
       ${badgeHtml}
       <h2 class="modal-title">${product.name}</h2>
       <p class="modal-price" id="price-modal-${product.id}">${formatCurrency(initialPrice)}</p>
-      <p class="modal-desc">${descText}</p>
+      <div class="modal-desc" style="font-size: 0.92rem; line-height: 1.6; color: #555; margin-bottom: 20px; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 14px 0;">
+        ${descText}
+      </div>
       
-      <div class="modal-option-row">
+      <div class="modal-option-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
         <label for="modal-opt-${product.id}"><strong>${optionLabel}:</strong></label>
-        <select id="modal-opt-${product.id}" class="option-select" onchange="updateProductVariant(${product.id}, this, 'price-modal-${product.id}', 'img-modal-${product.id}')">
+        <select id="modal-opt-${product.id}" class="option-select" onchange="updateProductVariant(${product.id}, this, 'price-modal-${product.id}', 'img-modal-${product.id}')" style="padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; cursor: pointer;">
           ${optionsList.map(opt => `<option value="${opt}" ${opt === currentSelectedOpt ? 'selected' : ''}>${opt}</option>`).join("")}
         </select>
       </div>
@@ -480,14 +455,10 @@ function openProductModal(productId) {
       </button>
     </div>
   `;
-
   productModal.classList.add("active");
 }
 
-document.getElementById("close-product-modal")?.addEventListener("click", () => {
-  productModal.classList.remove("active");
-});
-
+document.getElementById("close-product-modal")?.addEventListener("click", () => productModal.classList.remove("active"));
 productModal?.addEventListener("click", (e) => {
   if (e.target === productModal) productModal.classList.remove("active");
 });
@@ -496,13 +467,23 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
-  const optionsList = product.options && product.options.length > 0 ? product.options : ["Tiêu chuẩn"];
   const selectEl = document.getElementById(selectElementId);
-  const selectedOption = selectEl ? selectEl.value : optionsList[0];
+  const selectedOption = selectEl ? selectEl.value : (product.options[0] || "Tiêu chuẩn");
   const finalOptionPrice = getProductOptionPrice(product, selectedOption);
-  const finalOptionImage = getProductOptionImage(product, selectedOption);
+  
+  // NÂNG CẤP: Chặn mua hàng 0đ
+  if (finalOptionPrice === 0) {
+    showToast(`⛔ "${product.name}" đang cập nhật giá, chưa thể đặt hàng!`, true);
+    return;
+  }
 
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
+
+  // NÂNG CẤP: Giới hạn số lượng (Max 20/loại)
+  if (existingItem && existingItem.quantity >= 20) {
+    showToast(`⛔ Bạn chỉ được mua tối đa 20 sản phẩm loại này!`, true);
+    return;
+  }
 
   if (existingItem) {
     existingItem.quantity += 1;
@@ -512,7 +493,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
       name: product.name,
       price: finalOptionPrice,
       option: selectedOption,
-      image: finalOptionImage,
+      image: getProductOptionImage(product, selectedOption),
       quantity: 1
     });
   }
@@ -528,7 +509,12 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
 }
 
 function changeQuantity(index, delta) {
-  cart[index].quantity += delta;
+  const newQty = cart[index].quantity + delta;
+  if (newQty > 20) {
+    showToast(`⛔ Số lượng tối đa cho phép là 20!`, true);
+    return;
+  }
+  cart[index].quantity = newQty;
   if (cart[index].quantity <= 0) cart.splice(index, 1);
   saveCartToStorage();
   updateCartUI();
@@ -590,6 +576,12 @@ filterButtons.forEach(btn => {
     filterButtons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     currentCategory = btn.getAttribute("data-category");
+    
+    // NÂNG CẤP: Đẩy trạng thái bộ lọc lên URL để khách có thể share link
+    const newUrl = new URL(window.location);
+    newUrl.searchParams.set('category', currentCategory);
+    window.history.pushState({}, '', newUrl);
+
     renderProducts();
   });
 });
@@ -619,7 +611,7 @@ if (savedCustomer.address && document.getElementById("cust-address")) document.g
 
 document.getElementById("open-checkout-btn")?.addEventListener("click", () => {
   if (cart.length === 0) {
-    showToast("Giỏ hàng đang trống! Hãy chọn sản phẩm trước.");
+    showToast("Giỏ hàng đang trống! Hãy chọn sản phẩm trước.", true);
     return;
   }
   cartModal.classList.remove("active");
@@ -646,13 +638,11 @@ function renderCheckoutSummary() {
   const finalTotal = Math.max(0, subtotal - appliedDiscount + shippingFee);
 
   summaryListEl.innerHTML = cart.map(item => {
-    const productObj = products.find(p => p.id === item.id);
-    const imgSrc = item.image || (productObj ? getProductOptionImage(productObj, item.option) : "");
-    const safeImgName = imgSrc.replace(/'/g, "\\'");
+    const imgSrc = item.image;
     return `
       <div class="summary-item">
         <div class="summary-item-left">
-          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" loading="lazy" onerror="handleImageError(this, ${item.id}, '${safeImgName}')">
+          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" loading="lazy" data-original-src="${imgSrc}" onerror="handleImageError(this, ${item.id})">
           <div>
             <strong>${item.name}</strong>
             <div style="font-size: 0.78rem; color: #666;">${item.option} &times; ${item.quantity}</div>
@@ -725,19 +715,19 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
   if (!name || !phone || !address) {
-    showToast("Vui lòng điền đủ Họ tên, SĐT và Địa chỉ/Lớp!");
+    showToast("Vui lòng điền đủ Họ tên, SĐT và Địa chỉ/Lớp!", true);
     return;
   }
 
   if (!/^[0-9]{9,11}$/.test(phone)) {
-    showToast("Số điện thoại không hợp lệ (9 - 11 chữ số)!");
+    showToast("Số điện thoại không hợp lệ (9 - 11 chữ số)!", true);
     return;
   }
 
   localStorage.setItem("archi20_customer", JSON.stringify({ name, phone, email, address }));
 
   const checkoutBtn = document.getElementById("checkout-btn");
-  checkoutBtn.textContent = "ĐANG XỬ LÝ ĐƠN HÀNG...";
+  checkoutBtn.textContent = "ĐANG GỬI ĐƠN HÀNG...";
   checkoutBtn.disabled = true;
 
   const orderCode = document.getElementById("qr-memo")?.textContent || ("ARCHI" + Math.floor(1000 + Math.random() * 9000));
@@ -755,11 +745,10 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
     items: orderItemsText,
     total: finalTotalText
   };
-  orderHistory.unshift(newOrder);
-  localStorage.setItem("archi20_orders", JSON.stringify(orderHistory));
 
+  // NÂNG CẤP: Bắt lỗi mạng. Nếu khách rớt mạng, đơn không gửi được thì KHÔNG xóa giỏ hàng
   try {
-    await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
+    const response = await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
@@ -776,17 +765,25 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
         "Tổng thanh toán": finalTotalText
       })
     });
-  } catch (e) {
-  } finally {
+
+    if (!response.ok) throw new Error("Mạng lỗi");
+
+    // Chỉ lưu lịch sử và xóa giỏ khi đã gửi thành công
+    orderHistory.unshift(newOrder);
+    localStorage.setItem("archi20_orders", JSON.stringify(orderHistory));
     cart = [];
     appliedDiscount = 0;
     saveCartToStorage();
     updateCartUI();
     checkoutModal.classList.remove("active");
-    checkoutBtn.textContent = "HOÀN TẤT ĐẶT HÀNG";
-    checkoutBtn.disabled = false;
     showToast(`🎉 Đặt hàng thành công! Mã đơn: #${orderCode}`);
     openOrderHistoryModal();
+
+  } catch (error) {
+    showToast("Đường truyền không ổn định. Vui lòng kiểm tra WiFi/4G và thử lại!", true);
+  } finally {
+    checkoutBtn.textContent = "HOÀN TẤT ĐẶT HÀNG";
+    checkoutBtn.disabled = false;
   }
 });
 
