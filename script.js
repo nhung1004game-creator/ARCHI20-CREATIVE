@@ -195,7 +195,7 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat  .jpg",
+    image: "quat.jpg",
     fallbackImages: [
       "fan.jpg",
       "fan.png",
