@@ -101,22 +101,24 @@ const products = [
   {
     id: 9,
     name: "Móc Khóa Len KTD (Thủ Công)",
-    price: 40,
+    price: 50000,
     category: "moc-khoa",
     badge: "Handmade",
     optionLabel: "Chọn mẫu",
-    options: ["Móc khóa KTD 1", "Móc khóa KTD 2"],
-    description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
-    optionImages: {
-      "Móc khóa KTD 1": "móc khóa KTD 1 .jpg",
-      "Móc khóa KTD 2": "móc khóa ktd 2.png"
     options: [
-      "Móc khóa KTD 1(50K)",
-      "Móc khóa KTD 2 (40K)",
+      "Móc khóa KTD 1 (50K)",
+      "Móc khóa KTD 2 (40K)"
     ],
     optionPrices: {
-      "Móc khóa KTD 1(50K)",50,
-      "Móc khóa KTD 2 (40K)": 40, 
+      "Móc khóa KTD 1 (50K)": 50000,
+      "Móc khóa KTD 2 (40K)": 40000
+    },
+    optionImages: {
+      "Móc khóa KTD 1 (50K)": "móc khóa KTD 1 .jpg",
+      "Móc khóa KTD 2 (40K)": "móc khóa ktd 2.png"
+    },
+    description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
+    image: "móc khóa KTD 1 .jpg"
   },
   {
     id: 10,
@@ -198,6 +200,18 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("search-input");
 const sortSelect = document.getElementById("sort-select");
 
+const BANK_ID = "MB";
+const ACCOUNT_NO = "0905123456";
+const ACCOUNT_NAME = "PHAM HONG NHUNG";
+const YOUR_EMAIL = "email_cua_ban@gmail.com";
+
+const bankLabel = document.getElementById("bank-label");
+const accNoLabel = document.getElementById("acc-no-label");
+const accNameLabel = document.getElementById("acc-name-label");
+if (bankLabel) bankLabel.textContent = BANK_ID + " Bank";
+if (accNoLabel) accNoLabel.textContent = ACCOUNT_NO;
+if (accNameLabel) accNameLabel.textContent = ACCOUNT_NAME;
+
 function formatCurrency(amount) {
   if (!amount || amount === 0) return "Đang cập nhật giá";
   return amount.toLocaleString("vi-VN") + " ₫";
@@ -210,13 +224,23 @@ function getProductOptionPrice(product, selectedOption) {
   return product.price || 0;
 }
 
-function updateDisplayedPrice(productId, selectEl, priceElementId) {
+function updateProductVariant(productId, selectEl, priceElementId, imgElementId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
-  const newPrice = getProductOptionPrice(product, selectEl.value);
+  const selectedOpt = selectEl.value;
+
+  const newPrice = getProductOptionPrice(product, selectedOpt);
   const priceEl = document.getElementById(priceElementId);
   if (priceEl) {
     priceEl.textContent = formatCurrency(newPrice);
+  }
+
+  if (product.optionImages && product.optionImages[selectedOpt]) {
+    const newImgSrc = product.optionImages[selectedOpt];
+    const imgEl = document.getElementById(imgElementId);
+    if (imgEl) {
+      imgEl.src = newImgSrc;
+    }
   }
 }
 
@@ -329,6 +353,8 @@ function renderProducts() {
             src="${product.image}" 
             alt="${product.name}" 
             class="product-img"
+            id="img-card-${product.id}"
+            loading="lazy"
             onerror="handleImageError(this, '${safeImgName}')"
           >
         </div>
@@ -340,7 +366,7 @@ function renderProducts() {
           <div>
             <div class="option-row">
               <label for="opt-${product.id}">${optionLabel}:</label>
-              <select id="opt-${product.id}" class="option-select" onchange="updateDisplayedPrice(${product.id}, this, 'price-card-${product.id}')">
+              <select id="opt-${product.id}" class="option-select" onchange="updateProductVariant(${product.id}, this, 'price-card-${product.id}', 'img-card-${product.id}')">
                 ${optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
               </select>
             </div>
@@ -370,6 +396,8 @@ function openProductModal(productId) {
       src="${product.image}" 
       alt="${product.name}" 
       class="modal-img"
+      id="img-modal-${product.id}"
+      loading="lazy"
       onerror="handleImageError(this, '${safeImgName}')"
     >
     <div class="modal-details">
@@ -380,7 +408,7 @@ function openProductModal(productId) {
       
       <div class="modal-option-row">
         <label for="modal-opt-${product.id}"><strong>${optionLabel}:</strong></label>
-        <select id="modal-opt-${product.id}" class="option-select" onchange="updateDisplayedPrice(${product.id}, this, 'price-modal-${product.id}')">
+        <select id="modal-opt-${product.id}" class="option-select" onchange="updateProductVariant(${product.id}, this, 'price-modal-${product.id}', 'img-modal-${product.id}')">
           ${optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
         </select>
       </div>
@@ -479,9 +507,13 @@ function updateCartUI() {
   `).join("");
 }
 
+let searchTimeout;
 searchInput?.addEventListener("input", (e) => {
-  searchKeyword = e.target.value;
-  renderProducts();
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchKeyword = e.target.value;
+    renderProducts();
+  }, 150);
 });
 
 sortSelect?.addEventListener("change", (e) => {
@@ -512,12 +544,14 @@ const deliveryMethodSelect = document.getElementById("delivery-method");
 const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
 const qrPaymentBox = document.getElementById("qr-payment-box");
 
-const BANK_ID = "MB";
-const ACCOUNT_NO = "0905123456";
-const ACCOUNT_NAME = "PHAM HONG NHUNG";
-
 document.getElementById("open-cart-btn")?.addEventListener("click", () => cartModal.classList.add("active"));
 document.getElementById("close-cart-btn")?.addEventListener("click", () => cartModal.classList.remove("active"));
+
+const savedCustomer = JSON.parse(localStorage.getItem("archi20_customer")) || {};
+if (savedCustomer.name) document.getElementById("cust-name").value = savedCustomer.name;
+if (savedCustomer.phone) document.getElementById("cust-phone").value = savedCustomer.phone;
+if (savedCustomer.email) document.getElementById("cust-email").value = savedCustomer.email;
+if (savedCustomer.address) document.getElementById("cust-address").value = savedCustomer.address;
 
 document.getElementById("open-checkout-btn")?.addEventListener("click", () => {
   if (cart.length === 0) {
@@ -554,7 +588,7 @@ function renderCheckoutSummary() {
     return `
       <div class="summary-item">
         <div class="summary-item-left">
-          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" onerror="handleImageError(this, '${safeImgName}')">
+          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" loading="lazy" onerror="handleImageError(this, '${safeImgName}')">
           <div>
             <strong>${item.name}</strong>
             <div style="font-size: 0.78rem; color: #666;">${item.option} &times; ${item.quantity}</div>
@@ -636,6 +670,8 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
     return;
   }
 
+  localStorage.setItem("archi20_customer", JSON.stringify({ name, phone, email, address }));
+
   const checkoutBtn = document.getElementById("checkout-btn");
   checkoutBtn.textContent = "ĐANG XỬ LÝ ĐƠN HÀNG...";
   checkoutBtn.disabled = true;
@@ -657,8 +693,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   };
   orderHistory.unshift(newOrder);
   localStorage.setItem("archi20_orders", JSON.stringify(orderHistory));
-
-  const YOUR_EMAIL = "email_cua_ban@gmail.com";
 
   try {
     await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
@@ -682,7 +716,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   } finally {
     cart = [];
     appliedDiscount = 0;
-    appliedPromoCode = "";
     saveCartToStorage();
     updateCartUI();
     checkoutModal.classList.remove("active");
