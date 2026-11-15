@@ -176,22 +176,6 @@ const products = [
     ]
   },
   {
-    id: 15,
-    name: "Quạt Cầm Tay",
-    price: 20000,
-    category: "trang-tri",
-    badge: "Kỷ niệm 20 năm",
-    optionLabel: "Phiên bản",
-    options: ["Đỏ - Trắng DAU"],
-    description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat .jpg",
-    fallbackImages: [
-      "quat .jpg",
-      "quat  .jpg",
-      "quat.jpg"
-    ]
-  },
-  {
     id: 16,
     name: "Móc Khóa Len Cookuu",
     price: 65000,
