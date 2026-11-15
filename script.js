@@ -186,7 +186,7 @@ const products = [
       "Tranh hoa -70k .jpg"
     ]
   },
-  {
+ {
     id: 15,
     name: "Quạt Cầm Tay",
     price: 20000,
@@ -195,21 +195,14 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat.jpg",
+    image: "quat .png", // Thử đổi thành .png nếu ảnh của bạn là png
     fallbackImages: [
-      "fan.jpg",
-      "fan.png",
-      "quat  .jpg",
-      "quat .jpg",
-      "quat.jpg",
-      "quat   .jpg",
-      "quat    .jpg",
-      "quat  .png",
       "quat .png",
       "quat.png",
-      "Quat  .jpg",
-      "Quat .jpg",
-      "Quat.jpg"
+      "quat .jpg",
+      "quat.jpg",
+      "quat  .jpg",
+      "quat   .jpg"
     ]
   },
   {
