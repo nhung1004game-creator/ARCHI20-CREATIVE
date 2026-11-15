@@ -30,7 +30,28 @@ const products = [
     optionLabel: "Kích cỡ",
     options: ["S", "M", "L", "XL", "XXL"],
     description: "Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.",
-    image: "polo.jpg" // Đã rút gọn tên file cho chuẩn xác
+    image: "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
+    // Danh sách tự động dò đúng tên file áo polo bị khuất sau dấu ... trong thư mục của bạn
+    fallbackImages: [
+      "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 175K.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 175k .jpg",
+      "áo polo trường đại học kiến trúc đà nẵng - 175k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 150k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 150K.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 150k .jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 120k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 180k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 160k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 140k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 130k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 100k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 190k.jpg",
+      "áo polo trường đại học kiến trúc đà nẵng (1).jpg",
+      "áo polo trường đại học kiến trúc đà nẵng 1.jpg",
+      "ao-polo.jpg",
+      "polo.jpg"
+    ]
   },
   {
     id: 3,
@@ -98,7 +119,7 @@ const products = [
     description: "Ghim cài áo, balo, túi tote mang biểu tượng đặc trưng.",
     image: "GHIM CÀI 15K.jpg"
   },
- {
+  {
     id: 9,
     name: "Móc Khóa Len KTD (Thủ Công)",
     price: 50000,
@@ -114,11 +135,18 @@ const products = [
       "Móc khóa KTD 2 (40K)": 40000
     },
     optionImages: {
-      "Móc khóa KTD 1 (50K)": "ktd1.jpg",
+      "Móc khóa KTD 1 (50K)": "móc khóa KTD 1 .jpg",
       "Móc khóa KTD 2 (40K)": "móc khóa ktd 2.png"
     },
+    fallbackImages: [
+      "móc khóa KTD 1 .jpg",
+      "móc khóa KTD 1.jpg",
+      "ktd1.jpg",
+      "móc khóa ktd 2.png",
+      "móc khóa ktd 2.jpg"
+    ],
     description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
-    image: "ktd1.jpg"
+    image: "móc khóa KTD 1 .jpg"
   },
   {
     id: 10,
@@ -173,7 +201,12 @@ const products = [
     optionLabel: "Mẫu",
     options: ["Tiêu chuẩn"],
     description: "Tranh hoa trang trí góc học tập và làm việc.",
-    image: "Tranh hoa -75k .jpg"
+    image: "Tranh hoa -75k .jpg",
+    fallbackImages: [
+      "Tranh hoa -75k .jpg",
+      "Tranh hoa -75k.jpg",
+      "Tranh hoa -70k .jpg"
+    ]
   }
 ];
 
@@ -185,7 +218,6 @@ let currentCategory = "all";
 let searchKeyword = "";
 let currentSort = "default";
 let appliedDiscount = 0;
-let appliedPromoCode = "";
 
 const productListEl = document.getElementById("product-list");
 const resultsInfoEl = document.getElementById("results-info");
@@ -200,6 +232,7 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("search-input");
 const sortSelect = document.getElementById("sort-select");
 
+// CẤU HÌNH NGÂN HÀNG VIETQR & EMAIL NHẬN ĐƠN
 const BANK_ID = "MB";
 const ACCOUNT_NO = "0905123456";
 const ACCOUNT_NAME = "PHAM HONG NHUNG";
@@ -224,23 +257,62 @@ function getProductOptionPrice(product, selectedOption) {
   return product.price || 0;
 }
 
+function getProductOptionImage(product, selectedOption) {
+  if (product.optionImages && product.optionImages[selectedOption]) {
+    return product.optionImages[selectedOption];
+  }
+  return product.image;
+}
+
+// Hàm cập nhật CẢ GIÁ VÀ HÌNH ẢNH khi khách chọn phân loại
 function updateProductVariant(productId, selectEl, priceElementId, imgElementId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
   const selectedOpt = selectEl.value;
 
+  // 1. Cập nhật giá
   const newPrice = getProductOptionPrice(product, selectedOpt);
   const priceEl = document.getElementById(priceElementId);
   if (priceEl) {
     priceEl.textContent = formatCurrency(newPrice);
   }
 
-  if (product.optionImages && product.optionImages[selectedOpt]) {
-    const newImgSrc = product.optionImages[selectedOpt];
-    const imgEl = document.getElementById(imgElementId);
-    if (imgEl) {
-      imgEl.src = newImgSrc;
-    }
+  // 2. Cập nhật hình ảnh đúng theo phân loại
+  const newImgSrc = getProductOptionImage(product, selectedOpt);
+  const imgEl = document.getElementById(imgElementId);
+  if (imgEl && newImgSrc) {
+    imgEl.dataset.retry = "0"; // Reset bộ đếm thử lại ảnh
+    imgEl.src = newImgSrc;
+  }
+}
+
+// Hàm tự động xử lý lỗi tên file ảnh RIÊNG BIỆT cho từng sản phẩm (Không bao giờ lấy nhầm ảnh sản phẩm khác)
+function handleImageError(imgEl, productId, currentImgName) {
+  const product = products.find(p => p.id === productId);
+  const baseName = currentImgName || (product ? product.image : "");
+  if (!baseName) return;
+
+  const customFallbacks = (product && product.fallbackImages) ? product.fallbackImages : [];
+
+  // Chỉ thử các biến thể dấu cách hoặc đuôi .jpg/.png của CHÍNH bức ảnh đó
+  const rawAttempts = [
+    baseName,
+    baseName.replace(/\s+\./g, "."), // Xóa khoảng trắng thừa trước dấu chấm
+    baseName.replace(/\.(jpg|png|jpeg)$/i, " .$1"), // Thêm khoảng trắng trước dấu chấm nếu file gốc có
+    ...customFallbacks,
+    baseName.replace(/\.jpg$/i, ".png"),
+    baseName.replace(/\.png$/i, ".jpg"),
+    baseName.replace(/\s+\./g, ".").replace(/\.jpg$/i, ".png"),
+    baseName.replace(/\s+\./g, ".").replace(/\.png$/i, ".jpg")
+  ];
+
+  // Loại bỏ các tên trùng lặp
+  const attempts = [...new Set(rawAttempts)];
+
+  let step = parseInt(imgEl.dataset.retry || "0", 10) + 1;
+  if (step < attempts.length) {
+    imgEl.dataset.retry = step;
+    imgEl.src = attempts[step];
   }
 }
 
@@ -267,24 +339,6 @@ function removeVietnameseTones(str) {
     .replace(/đ/g, "d")
     .replace(/Đ/g, "D")
     .toLowerCase();
-}
-
-function handleImageError(imgEl, originalName) {
-  const attempts = [
-    originalName,
-    originalName.replace(/\s+\./g, '.'),
-    originalName.replace(/\(/g, ' (').replace(/\s+/g, ' '),
-    originalName.replace(/\s*\(/g, '('),
-    "Tranh hoa -75k .jpg",
-    "móc khóa ktd 2.png",
-    originalName.replace('.jpg', '.png'),
-    originalName.replace('.png', '.jpg')
-  ];
-  let step = parseInt(imgEl.dataset.retry || "0", 10) + 1;
-  if (step < attempts.length) {
-    imgEl.dataset.retry = step;
-    imgEl.src = attempts[step];
-  }
 }
 
 function toggleWishlist(productId, event) {
@@ -338,9 +392,11 @@ function renderProducts() {
     const optionsList = product.options && product.options.length > 0 ? product.options : ["Tiêu chuẩn"];
     const optionLabel = product.optionLabel || "Phân loại";
     const badgeHtml = product.badge ? `<span class="product-badge">${product.badge}</span>` : "";
-    const safeImgName = product.image.replace(/'/g, "\\'");
+    const initialOption = optionsList[0];
+    const initialPrice = getProductOptionPrice(product, initialOption);
+    const initialImage = getProductOptionImage(product, initialOption);
+    const safeImgName = initialImage.replace(/'/g, "\\'");
     const isLiked = wishlist.includes(product.id);
-    const initialPrice = getProductOptionPrice(product, optionsList[0]);
 
     return `
       <div class="product-card">
@@ -350,12 +406,12 @@ function renderProducts() {
         </button>
         <div class="product-img-wrapper" onclick="openProductModal(${product.id})">
           <img 
-            src="${product.image}" 
+            src="${initialImage}" 
             alt="${product.name}" 
             class="product-img"
             id="img-card-${product.id}"
             loading="lazy"
-            onerror="handleImageError(this, '${safeImgName}')"
+            onerror="handleImageError(this, ${product.id}, '${safeImgName}')"
           >
         </div>
         <div class="product-info">
@@ -388,17 +444,23 @@ function openProductModal(productId) {
   const optionLabel = product.optionLabel || "Phân loại";
   const badgeHtml = product.badge ? `<span class="modal-badge">${product.badge}</span>` : "";
   const descText = product.description || "Ấn phẩm thuộc bộ sưu tập kỷ niệm 20 năm ARCHI20 CREATIVE - Đại học Kiến trúc Đà Nẵng.";
-  const safeImgName = product.image.replace(/'/g, "\\'");
-  const initialPrice = getProductOptionPrice(product, optionsList[0]);
+  
+  // Lấy phân loại đang được chọn ở ngoài thẻ sản phẩm (nếu có)
+  const cardSelect = document.getElementById(`opt-${product.id}`);
+  const currentSelectedOpt = cardSelect ? cardSelect.value : optionsList[0];
+
+  const initialPrice = getProductOptionPrice(product, currentSelectedOpt);
+  const initialImage = getProductOptionImage(product, currentSelectedOpt);
+  const safeImgName = initialImage.replace(/'/g, "\\'");
 
   productModalBody.innerHTML = `
     <img 
-      src="${product.image}" 
+      src="${initialImage}" 
       alt="${product.name}" 
       class="modal-img"
       id="img-modal-${product.id}"
       loading="lazy"
-      onerror="handleImageError(this, '${safeImgName}')"
+      onerror="handleImageError(this, ${product.id}, '${safeImgName}')"
     >
     <div class="modal-details">
       ${badgeHtml}
@@ -409,7 +471,7 @@ function openProductModal(productId) {
       <div class="modal-option-row">
         <label for="modal-opt-${product.id}"><strong>${optionLabel}:</strong></label>
         <select id="modal-opt-${product.id}" class="option-select" onchange="updateProductVariant(${product.id}, this, 'price-modal-${product.id}', 'img-modal-${product.id}')">
-          ${optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
+          ${optionsList.map(opt => `<option value="${opt}" ${opt === currentSelectedOpt ? 'selected' : ''}>${opt}</option>`).join("")}
         </select>
       </div>
 
@@ -438,6 +500,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
   const selectEl = document.getElementById(selectElementId);
   const selectedOption = selectEl ? selectEl.value : optionsList[0];
   const finalOptionPrice = getProductOptionPrice(product, selectedOption);
+  const finalOptionImage = getProductOptionImage(product, selectedOption);
 
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
 
@@ -449,6 +512,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
       name: product.name,
       price: finalOptionPrice,
       option: selectedOption,
+      image: finalOptionImage,
       quantity: 1
     });
   }
@@ -548,10 +612,10 @@ document.getElementById("open-cart-btn")?.addEventListener("click", () => cartMo
 document.getElementById("close-cart-btn")?.addEventListener("click", () => cartModal.classList.remove("active"));
 
 const savedCustomer = JSON.parse(localStorage.getItem("archi20_customer")) || {};
-if (savedCustomer.name) document.getElementById("cust-name").value = savedCustomer.name;
-if (savedCustomer.phone) document.getElementById("cust-phone").value = savedCustomer.phone;
-if (savedCustomer.email) document.getElementById("cust-email").value = savedCustomer.email;
-if (savedCustomer.address) document.getElementById("cust-address").value = savedCustomer.address;
+if (savedCustomer.name && document.getElementById("cust-name")) document.getElementById("cust-name").value = savedCustomer.name;
+if (savedCustomer.phone && document.getElementById("cust-phone")) document.getElementById("cust-phone").value = savedCustomer.phone;
+if (savedCustomer.email && document.getElementById("cust-email")) document.getElementById("cust-email").value = savedCustomer.email;
+if (savedCustomer.address && document.getElementById("cust-address")) document.getElementById("cust-address").value = savedCustomer.address;
 
 document.getElementById("open-checkout-btn")?.addEventListener("click", () => {
   if (cart.length === 0) {
@@ -583,12 +647,12 @@ function renderCheckoutSummary() {
 
   summaryListEl.innerHTML = cart.map(item => {
     const productObj = products.find(p => p.id === item.id);
-    const imgSrc = productObj ? productObj.image : "";
+    const imgSrc = item.image || (productObj ? getProductOptionImage(productObj, item.option) : "");
     const safeImgName = imgSrc.replace(/'/g, "\\'");
     return `
       <div class="summary-item">
         <div class="summary-item-left">
-          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" loading="lazy" onerror="handleImageError(this, '${safeImgName}')">
+          <img src="${imgSrc}" alt="${item.name}" class="summary-item-img" loading="lazy" onerror="handleImageError(this, ${item.id}, '${safeImgName}')">
           <div>
             <strong>${item.name}</strong>
             <div style="font-size: 0.78rem; color: #666;">${item.option} &times; ${item.quantity}</div>
