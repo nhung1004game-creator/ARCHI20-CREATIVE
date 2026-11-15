@@ -31,14 +31,15 @@ const products = [
     options: ["S", "M", "L", "XL", "2XL", "3XL"],
     description: `Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.<br>
     <img src="bang-size.jpg" alt="Bảng hướng dẫn chọn size áo" style="width: 100%; margin-top: 10px; border-radius: 6px; border: 1px solid #e5dec9; cursor: zoom-in;" onclick="window.open(this.src, '_blank')" title="Bấm vào ảnh để phóng to" onerror="this.src='bang-size.png'">`,
-    image: "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
+    image: "polo.jpg",
     fallbackImages: [
+      "polo.jpg",
+      "polo.png",
       "áo polo trường đại học kiến trúc đà nẵng 175k.jpg",
       "áo polo trường đại học kiến trúc đà nẵng 175K.jpg",
       "áo polo trường đại học kiến trúc đà nẵng 150k.jpg",
       "áo polo trường đại học kiến trúc đà nẵng 1.jpg",
-      "ao-polo.jpg",
-      "polo.jpg"
+      "ao-polo.jpg"
     ]
   },
   {
@@ -123,23 +124,18 @@ const products = [
       "Móc khóa KTD 2 (40K)": 40000
     },
     optionImages: {
-      "Móc khóa KTD 1 (50K)": "ktd1.jpg",
+      "Móc khóa KTD 1 (50K)": "ktd1.png",
       "Móc khóa KTD 2 (40K)": "móc khóa ktd 2.png"
     },
     fallbackImages: [
-      "ktd1.jpg",
       "ktd1.png",
+      "ktd1.jpg",
       "móc khóa KTD 1 .jpg",
       "móc khóa KTD 1.jpg",
-      "móc khóa ktd 1 .jpg",
-      "móc khóa ktd 1.jpg",
-      "móc khóa KTD 1 .png",
-      "móc khóa KTD 1.png",
-      "móc khóa KTD 1 .jpg",
-      "móc khóa KTD 1.jpg"
+      "móc khóa ktd 2.png"
     ],
     description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
-    image: "ktd1.jpg"
+    image: "ktd1.png"
   },
   {
     id: 10,
@@ -199,17 +195,21 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat .jpg",
+    image: "quat  .jpg",
     fallbackImages: [
+      "fan.jpg",
+      "fan.png",
+      "quat  .jpg",
       "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
-      "quat .jpg",
+      "quat.jpg",
+      "quat   .jpg",
+      "quat    .jpg",
+      "quat  .png",
+      "quat .png",
+      "quat.png",
+      "Quat  .jpg",
+      "Quat .jpg",
+      "Quat.jpg"
     ]
   },
   {
@@ -267,11 +267,10 @@ filterButtons.forEach(btn => {
   btn.classList.toggle("active", btn.getAttribute("data-category") === currentCategory);
 });
 
-// Cấu hình ngân hàng & Đồng bộ Email nhận đơn
 const BANK_ID = "MB";
 const ACCOUNT_NO = "0905123456";
 const ACCOUNT_NAME = "PHAM HONG NHUNG";
-const YOUR_EMAIL = "khoakientrucstu@gmail.com"; 
+const YOUR_EMAIL = "khoakientrucstu@gmail.com";
 
 const bankLabel = document.getElementById("bank-label");
 const accNoLabel = document.getElementById("acc-no-label");
@@ -319,28 +318,29 @@ function updateProductVariant(productId, selectEl, priceElementId, imgElementId)
   }
 }
 
+// HÀM DÒ ẢNH ĐÃ SỬA TRIỆT ĐỂ LỖI NHẢY CÓC INDEX
 function handleImageError(imgEl, productId) {
   const product = products.find(p => p.id === productId);
   const baseName = imgEl.dataset.originalSrc || (product ? product.image : "");
-  if (!baseName) return;
-
   const customFallbacks = (product && product.fallbackImages) ? product.fallbackImages : [];
+
   const rawAttempts = [
-    baseName,
-    baseName.replace(/\s+\./g, "."), 
-    baseName.replace(/\.(jpg|png|jpeg)$/i, " .$1"), 
     ...customFallbacks,
+    baseName,
+    baseName.replace(/\s+\./g, "."),
+    baseName.replace(/\.(jpg|png|jpeg)$/i, " .$1"),
+    baseName.replace(/\.(jpg|png|jpeg)$/i, "  .$1"),
     baseName.replace(/\.jpg$/i, ".png"),
     baseName.replace(/\.png$/i, ".jpg"),
     baseName.replace(/\s+\./g, ".").replace(/\.jpg$/i, ".png"),
     baseName.replace(/\s+\./g, ".").replace(/\.png$/i, ".jpg")
-  ];
+  ].filter(Boolean);
 
   const attempts = [...new Set(rawAttempts)];
-  let step = parseInt(imgEl.dataset.retry || "0", 10) + 1;
-  
+  let step = parseInt(imgEl.dataset.retry || "0", 10);
+
   if (step < attempts.length) {
-    imgEl.dataset.retry = step;
+    imgEl.dataset.retry = step + 1;
     imgEl.src = attempts[step];
   }
 }
