@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARCHI20 CREATIVE | 20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIÊN TẠO</title>
+  <title>ARCHI20 CREATIVE | 20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIẾN TẠO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Thanh thông báo đỉnh trang (Announcement Bar) -->
-  <div class="top-bar">
-    <span>🎉 KỶ NIỆM 20 NĂM DAU: Nhập mã <strong>DAU20</strong> giảm ngay 10% | Miễn phí nhận hàng tại sảnh Khoa Kiến trúc!</span>
-  </div>
 
   <!-- Thanh điều hướng -->
   <header class="navbar">
@@ -50,7 +45,7 @@
         <input 
           type="text" 
           id="search-input" 
-          placeholder="Tìm kiếm cúp, móc khóa, dây đeo, tranh..." 
+          placeholder="Tìm kiếm áo polo, đồng hồ, khung người gỗ, keycap..." 
         />
       </div>
       <div class="sort-box">
@@ -64,7 +59,7 @@
       </div>
     </div>
 
-    <!-- Thanh bộ lọc danh mục -->
+    <!-- Thanh bộ lọc danh mục đã đồng bộ chính xác 100% với script.js -->
     <div class="filter-bar">
       <button class="filter-btn active" data-category="all">Tất cả</button>
       <button class="filter-btn" data-category="moc-khoa">Móc khóa Archi</button>
@@ -89,7 +84,7 @@
     </div>
   </div>
 
-  <!-- Cửa sổ Giỏ hàng (Cart Modal) - Đã lược bỏ form thừa -->
+  <!-- Cửa sổ Giỏ hàng (Cart Modal) -->
   <div class="cart-modal" id="cart-modal">
     <div class="cart-content">
       <div class="cart-header">
@@ -166,9 +161,9 @@
             <div class="qr-content">
               <img id="vietqr-img" src="" alt="Mã QR Thanh Toán" class="qr-img">
               <div class="bank-details">
-                <p>Ngân hàng: <strong>MB Bank (Quân Đội)</strong></p>
-                <p>Số tài khoản: <strong>0905123456</strong></p>
-                <p>Chủ TK: <strong>PHAM HONG NHUNG</strong></p>
+                <p>Ngân hàng: <strong id="bank-label">MB Bank</strong></p>
+                <p>Số tài khoản: <strong id="acc-no-label">0905123456</strong></p>
+                <p>Chủ TK: <strong id="acc-name-label">PHAM HONG NHUNG</strong></p>
                 <p>Số tiền: <strong id="qr-amount" class="highlight-red">0 ₫</strong></p>
                 <p>Nội dung CK: <strong id="qr-memo">ARCHI20</strong></p>
               </div>
@@ -176,24 +171,17 @@
           </div>
         </div>
 
-        <!-- Cột phải: Tóm tắt đơn hàng & Mã giảm giá -->
+        <!-- Cột phải: Tóm tắt đơn hàng -->
         <div class="checkout-right">
           <h4 class="checkout-section-title">Tóm Tắt Đơn Hàng</h4>
           <div class="checkout-summary-list" id="checkout-summary-list"></div>
-
-          <!-- Ô nhập mã giảm giá chuyên nghiệp -->
-          <div class="promo-box">
-            <input type="text" id="promo-input" placeholder="Nhập mã ưu đãi (VD: DAU20)">
-            <button type="button" id="apply-promo-btn">Áp dụng</button>
-          </div>
-          <p class="promo-msg" id="promo-msg"></p>
 
           <div class="checkout-totals">
             <div class="summary-line">
               <span>Tạm tính:</span>
               <span id="summary-subtotal">0 ₫</span>
             </div>
-            <div class="summary-line">
+            <div class="summary-line" style="display: none;">
               <span>Giảm giá:</span>
               <span id="summary-discount">- 0 ₫</span>
             </div>
@@ -244,10 +232,9 @@
         <p>Khoa Kiến trúc - Trường Đại học Kiến trúc Đà Nẵng (DAU)</p>
       </div>
       <div class="footer-col">
-        <h4>Chính Sách & Ưu Đãi</h4>
-        <p>Mã giảm 10% kỷ niệm 20 năm: <strong>DAU20</strong></p>
-        <p>Mã giảm 15K cho sinh viên Khoa: <strong>KIENTRUC</strong></p>
-        <p>Hỗ trợ đổi trả miễn phí tại sảnh Khoa Kiến trúc</p>
+        <h4>Hỗ Trợ Nhận Hàng</h4>
+        <p>Miễn phí nhận ấn phẩm trực tiếp tại sảnh Khoa Kiến trúc</p>
+        <p>Hỗ trợ giao hàng nội thành Đà Nẵng & Toàn quốc</p>
       </div>
       <div class="footer-col">
         <h4>Liên Hệ & Đặt Hàng</h4>
