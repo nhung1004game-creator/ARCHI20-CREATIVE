@@ -176,7 +176,23 @@ const products = [
     ]
   },
   {
-    id: 15ss,
+    id: 15,
+    name: "Quạt Cầm Tay",
+    price: 20000,
+    category: "trang-tri",
+    badge: "Kỷ niệm 20 năm",
+    optionLabel: "Phiên bản",
+    options: ["Đỏ - Trắng DAU"],
+    description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
+    image: "quat .jpg",
+    fallbackImages: [
+      "quat .jpg",
+      "quat  .jpg",
+      "quat.jpg"
+    ]
+  },
+  {
+    id: 16,
     name: "Móc Khóa Len Cookuu",
     price: 65000,
     category: "moc-khoa",
@@ -281,7 +297,6 @@ function updateProductVariant(productId, selectEl, priceElementId, imgElementId)
   }
 }
 
-// HÀM DÒ ẢNH ĐÃ SỬA TRIỆT ĐỂ LỖI NHẢY CÓC INDEX
 function handleImageError(imgEl, productId) {
   const product = products.find(p => p.id === productId);
   const baseName = imgEl.dataset.originalSrc || (product ? product.image : "");
@@ -465,6 +480,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
     return;
   }
 
+  const finalOptionImage = getProductOptionImage(product, selectedOption) || product.image;
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
 
   if (existingItem && existingItem.quantity >= 20) {
@@ -480,7 +496,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
       name: product.name,
       price: finalOptionPrice,
       option: selectedOption,
-      image: getProductOptionImage(product, selectedOption),
+      image: finalOptionImage,
       quantity: 1
     });
   }
@@ -624,7 +640,10 @@ function renderCheckoutSummary() {
   const finalTotal = Math.max(0, subtotal - appliedDiscount + shippingFee);
 
   summaryListEl.innerHTML = cart.map(item => {
-    const imgSrc = item.image;
+    const productObj = products.find(p => p.id === item.id);
+    const imgSrc = item.image || (productObj ? getProductOptionImage(productObj, item.option) : "");
+    const safeImgName = imgSrc.replace(/'/g, "\\'");
+
     return `
       <div class="summary-item">
         <div class="summary-item-left">
