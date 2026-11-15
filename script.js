@@ -1,6 +1,61 @@
 const products = [
   {
     id: 1,
+    name: "Khung Người Gỗ Phác Thảo",
+    price: 150000,
+    category: "trang-tri",
+    badge: "Độc bản",
+    optionLabel: "Phân loại",
+    options: [
+      "Loại 2 người gỗ (150K)",
+      "Loại 3 người gỗ (180K)",
+      "Loại 4 người gỗ (200K)",
+      "Loại 6 người gỗ (250K)"
+    ],
+    optionPrices: {
+      "Loại 2 người gỗ (150K)": 150000,
+      "Loại 3 người gỗ (180K)": 180000,
+      "Loại 4 người gỗ (200K)": 200000,
+      "Loại 6 người gỗ (250K)": 250000
+    },
+    description: "Mô hình khung người gỗ khớp xoay linh hoạt dùng cho phác thảo hình họa và trang trí bàn làm việc kiến trúc (Gồm 4 phân loại: 2, 3, 4 và 6 người gỗ).",
+    image: "KHUNG NGƯỜI GỖ 250K.jpg"
+  },
+  {
+    id: 2,
+    name: "Áo Polo Trường ĐH Kiến Trúc Đà Nẵng",
+    price: 175000,
+    category: "phu-kien",
+    badge: "Kỷ niệm 20 năm",
+    optionLabel: "Kích cỡ",
+    options: ["S", "M", "L", "XL", "XXL"],
+    description: "Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.",
+    image: "áo polo trường đại học kiến trúc đà nẵng 1.jpg"
+  },
+  {
+    id: 3,
+    name: "Đồng Hồ Treo Tường Kỷ Niệm 20 Năm DAU",
+    price: 200000,
+    category: "trang-tri",
+    badge: "Kỷ niệm 20 năm",
+    optionLabel: "Phiên bản",
+    options: ["Đỏ - Trắng DAU"],
+    description: "Đồng hồ treo tường kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
+    image: "đồng hồ kỉ niệm 20 năm .jpg"
+  },
+  {
+    id: 4,
+    name: "Keycap Logo Trường DAU",
+    price: 55000,
+    category: "phu-kien",
+    badge: "Mới",
+    optionLabel: "Mẫu",
+    options: ["Logo DAU"],
+    description: "Keycap bàn phím cơ khắc nổi biểu tượng Trường Đại học Kiến trúc Đà Nẵng độc đáo.",
+    image: "keycap logo trường 55k.jpg"
+  },
+  {
+    id: 5,
     name: "Cúp Lưu Niệm (Mẫu 1)",
     price: 0,
     category: "trang-tri",
@@ -11,7 +66,7 @@ const products = [
     image: "cúp lưu niệm (1).jpg"
   },
   {
-    id: 2,
+    id: 6,
     name: "Cúp Lưu Niệm (Mẫu 2)",
     price: 0,
     category: "trang-tri",
@@ -19,10 +74,10 @@ const products = [
     optionLabel: "Phiên bản",
     options: ["Tiêu chuẩn"],
     description: "Cúp lưu niệm thiết kế độc quyền đánh dấu hành trình 20 năm kiến tạo DAU.",
-    image: "cúp lưu niệm(2).jpg"
+    image: "cúp lưu niệm.jpg"
   },
   {
-    id: 3,
+    id: 7,
     name: "Dây Đeo Thẻ DAU",
     price: 40000,
     category: "phu-kien",
@@ -33,7 +88,7 @@ const products = [
     image: "DÂY ĐEO THẺ - 40K.jpg"
   },
   {
-    id: 4,
+    id: 8,
     name: "Ghim Cài Áo Archi",
     price: 15000,
     category: "phu-kien",
@@ -44,18 +99,27 @@ const products = [
     image: "GHIM CÀI 15K.jpg"
   },
   {
-    id: 5,
-    name: "Khung Người Gỗ Phác Thảo",
-    price: 250000,
-    category: "trang-tri",
-    badge: "Độc bản",
-    optionLabel: "Kích thước",
-    options: ["Tiêu chuẩn"],
-    description: "Mô hình người gỗ khớp xoay linh hoạt dùng cho phác thảo hình họa và trang trí bàn làm việc kiến trúc.",
-    image: "KHUNG NGƯỜI GỖ 250K.jpg"
+    id: 9,
+    name: "Móc Khóa Len KTD (Thủ Công)",
+    price: 40,
+    category: "moc-khoa",
+    badge: "Handmade",
+    optionLabel: "Chọn mẫu",
+    options: ["Móc khóa KTD 1", "Móc khóa KTD 2"],
+    description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
+    optionImages: {
+      "Móc khóa KTD 1": "móc khóa KTD 1 .jpg",
+      "Móc khóa KTD 2": "móc khóa ktd 2.png"
+    options: [
+      "Móc khóa KTD 1(50K)",
+      "Móc khóa KTD 2 (40K)",
+    ],
+    optionPrices: {
+      "Móc khóa KTD 1(50K)",50,
+      "Móc khóa KTD 2 (40K)": 40, 
   },
   {
-    id: 6,
+    id: 10,
     name: "Móc Khóa Thông Điệp",
     price: 15000,
     category: "moc-khoa",
@@ -66,7 +130,7 @@ const products = [
     image: "Móc khóa thông điệp 15k_.jpg"
   },
   {
-    id: 7,
+    id: 11,
     name: "Móc Khóa Palet Gỗ",
     price: 10000,
     category: "moc-khoa",
@@ -77,7 +141,7 @@ const products = [
     image: "MÓC PALET 10K .jpg"
   },
   {
-    id: 8,
+    id: 12,
     name: "Mũ Kỷ Niệm 20 Năm",
     price: 0,
     category: "phu-kien",
@@ -88,7 +152,7 @@ const products = [
     image: "mũ kỉ niệm 20namw.jpg"
   },
   {
-    id: 9,
+    id: 13,
     name: "Nón Lá Việt Nam Mini",
     price: 15000,
     category: "phu-kien",
@@ -99,15 +163,15 @@ const products = [
     image: "NÓN VIỆT NAM - 15K .jpg"
   },
   {
-    id: 10,
+    id: 14,
     name: "Tranh Hoa Nghệ Thuật",
-    price: 70000,
+    price: 75000,
     category: "trang-tri",
     badge: "Handmade",
     optionLabel: "Mẫu",
     options: ["Tiêu chuẩn"],
     description: "Tranh hoa trang trí góc học tập và làm việc.",
-    image: "Tranh hoa -70k .jpg"
+    image: "Tranh hoa -75k .jpg"
   }
 ];
 
@@ -137,6 +201,23 @@ const sortSelect = document.getElementById("sort-select");
 function formatCurrency(amount) {
   if (!amount || amount === 0) return "Đang cập nhật giá";
   return amount.toLocaleString("vi-VN") + " ₫";
+}
+
+function getProductOptionPrice(product, selectedOption) {
+  if (product.optionPrices && product.optionPrices[selectedOption] !== undefined) {
+    return product.optionPrices[selectedOption];
+  }
+  return product.price || 0;
+}
+
+function updateDisplayedPrice(productId, selectEl, priceElementId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  const newPrice = getProductOptionPrice(product, selectEl.value);
+  const priceEl = document.getElementById(priceElementId);
+  if (priceEl) {
+    priceEl.textContent = formatCurrency(newPrice);
+  }
 }
 
 function showToast(message) {
@@ -170,7 +251,8 @@ function handleImageError(imgEl, originalName) {
     originalName.replace(/\s+\./g, '.'),
     originalName.replace(/\(/g, ' (').replace(/\s+/g, ' '),
     originalName.replace(/\s*\(/g, '('),
-    "cúp lưu niệm.jpg",
+    "Tranh hoa -75k .jpg",
+    "móc khóa ktd 2.png",
     originalName.replace('.jpg', '.png'),
     originalName.replace('.png', '.jpg')
   ];
@@ -181,7 +263,6 @@ function handleImageError(imgEl, originalName) {
   }
 }
 
-// 1. Thả tim Yêu thích (Wishlist)
 function toggleWishlist(productId, event) {
   if (event) event.stopPropagation();
   const idx = wishlist.indexOf(productId);
@@ -200,7 +281,6 @@ function toggleWishlist(productId, event) {
   renderProducts();
 }
 
-// 2. Hiển thị & Sắp xếp danh sách sản phẩm
 function renderProducts() {
   if (wishlistCountEl) wishlistCountEl.textContent = wishlist.length;
   const normalizedKeyword = removeVietnameseTones(searchKeyword.trim());
@@ -213,7 +293,6 @@ function renderProducts() {
     return matchCategory && matchName;
   });
 
-  // Sắp xếp sản phẩm
   if (currentSort === "price-asc") {
     filtered.sort((a, b) => (a.price || 9999999) - (b.price || 9999999));
   } else if (currentSort === "price-desc") {
@@ -227,9 +306,7 @@ function renderProducts() {
   }
 
   if (filtered.length === 0) {
-    productListEl.innerHTML = `
-      <p class="no-result">Không tìm thấy ấn phẩm nào phù hợp.</p>
-    `;
+    productListEl.innerHTML = `<p class="no-result">Không tìm thấy ấn phẩm nào phù hợp.</p>`;
     return;
   }
 
@@ -239,6 +316,7 @@ function renderProducts() {
     const badgeHtml = product.badge ? `<span class="product-badge">${product.badge}</span>` : "";
     const safeImgName = product.image.replace(/'/g, "\\'");
     const isLiked = wishlist.includes(product.id);
+    const initialPrice = getProductOptionPrice(product, optionsList[0]);
 
     return `
       <div class="product-card">
@@ -257,12 +335,12 @@ function renderProducts() {
         <div class="product-info">
           <div>
             <h3 class="product-name" onclick="openProductModal(${product.id})">${product.name}</h3>
-            <p class="product-price">${formatCurrency(product.price)}</p>
+            <p class="product-price" id="price-card-${product.id}">${formatCurrency(initialPrice)}</p>
           </div>
           <div>
             <div class="option-row">
               <label for="opt-${product.id}">${optionLabel}:</label>
-              <select id="opt-${product.id}" class="option-select">
+              <select id="opt-${product.id}" class="option-select" onchange="updateDisplayedPrice(${product.id}, this, 'price-card-${product.id}')">
                 ${optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
               </select>
             </div>
@@ -276,7 +354,6 @@ function renderProducts() {
   }).join("");
 }
 
-// 3. Mở cửa sổ xem chi tiết sản phẩm
 function openProductModal(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
@@ -286,6 +363,7 @@ function openProductModal(productId) {
   const badgeHtml = product.badge ? `<span class="modal-badge">${product.badge}</span>` : "";
   const descText = product.description || "Ấn phẩm thuộc bộ sưu tập kỷ niệm 20 năm ARCHI20 CREATIVE - Đại học Kiến trúc Đà Nẵng.";
   const safeImgName = product.image.replace(/'/g, "\\'");
+  const initialPrice = getProductOptionPrice(product, optionsList[0]);
 
   productModalBody.innerHTML = `
     <img 
@@ -297,12 +375,12 @@ function openProductModal(productId) {
     <div class="modal-details">
       ${badgeHtml}
       <h2 class="modal-title">${product.name}</h2>
-      <p class="modal-price">${formatCurrency(product.price)}</p>
+      <p class="modal-price" id="price-modal-${product.id}">${formatCurrency(initialPrice)}</p>
       <p class="modal-desc">${descText}</p>
       
       <div class="modal-option-row">
         <label for="modal-opt-${product.id}"><strong>${optionLabel}:</strong></label>
-        <select id="modal-opt-${product.id}" class="option-select">
+        <select id="modal-opt-${product.id}" class="option-select" onchange="updateDisplayedPrice(${product.id}, this, 'price-modal-${product.id}')">
           ${optionsList.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
         </select>
       </div>
@@ -324,7 +402,6 @@ productModal?.addEventListener("click", (e) => {
   if (e.target === productModal) productModal.classList.remove("active");
 });
 
-// 4. Thêm sản phẩm vào giỏ kèm Toast thông báo
 function addToCart(productId, selectElementId, closeModalAfter = false) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
@@ -332,6 +409,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
   const optionsList = product.options && product.options.length > 0 ? product.options : ["Tiêu chuẩn"];
   const selectEl = document.getElementById(selectElementId);
   const selectedOption = selectEl ? selectEl.value : optionsList[0];
+  const finalOptionPrice = getProductOptionPrice(product, selectedOption);
 
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
 
@@ -341,7 +419,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
     cart.push({
       id: product.id,
       name: product.name,
-      price: product.price || 0,
+      price: finalOptionPrice,
       option: selectedOption,
       quantity: 1
     });
@@ -349,7 +427,7 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
 
   saveCartToStorage();
   updateCartUI();
-  showToast(`✓ Đã thêm "${product.name}" vào giỏ hàng!`);
+  showToast(`✓ Đã thêm "${product.name} - ${selectedOption}" vào giỏ!`);
 
   if (closeModalAfter) {
     productModal.classList.remove("active");
@@ -401,7 +479,6 @@ function updateCartUI() {
   `).join("");
 }
 
-// Tìm kiếm, Sắp xếp & Bộ lọc
 searchInput?.addEventListener("input", (e) => {
   searchKeyword = e.target.value;
   renderProducts();
@@ -430,7 +507,6 @@ document.getElementById("filter-wishlist-btn")?.addEventListener("click", () => 
   document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
 });
 
-// ================= XỬ LÝ THANH TOÁN, VOUCHER & VIETQR =================
 const checkoutModal = document.getElementById("checkout-modal");
 const deliveryMethodSelect = document.getElementById("delivery-method");
 const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
@@ -459,38 +535,11 @@ document.getElementById("back-to-cart-btn")?.addEventListener("click", () => {
   cartModal.classList.add("active");
 });
 
-// Xử lý Mã giảm giá (Voucher)
-document.getElementById("apply-promo-btn")?.addEventListener("click", () => {
-  const code = document.getElementById("promo-input").value.trim().toUpperCase();
-  const msgEl = document.getElementById("promo-msg");
-  const subtotal = cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
-
-  if (code === "DAU20") {
-    appliedDiscount = Math.round(subtotal * 0.1);
-    appliedPromoCode = "DAU20 (-10%)";
-    msgEl.style.color = "#2a9d8f";
-    msgEl.textContent = "✓ Áp dụng thành công mã DAU20 (Giảm 10%)!";
-  } else if (code === "KIENTRUC") {
-    appliedDiscount = 15000;
-    appliedPromoCode = "KIENTRUC (-15K)";
-    msgEl.style.color = "#2a9d8f";
-    msgEl.textContent = "✓ Áp dụng thành công mã KIENTRUC (Giảm 15.000₫)!";
-  } else {
-    appliedDiscount = 0;
-    appliedPromoCode = "";
-    msgEl.style.color = "#b32d1e";
-    msgEl.textContent = "✕ Mã giảm giá không hợp lệ (Thử: DAU20 hoặc KIENTRUC).";
-  }
-  renderCheckoutSummary();
-});
-
 function renderCheckoutSummary() {
   const summaryListEl = document.getElementById("checkout-summary-list");
   if (!summaryListEl) return;
 
   const subtotal = cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
-  if (appliedPromoCode.includes("10%")) appliedDiscount = Math.round(subtotal * 0.1);
-
   const deliveryVal = deliveryMethodSelect ? deliveryMethodSelect.value : "";
   let shippingFee = 0;
   if (deliveryVal.includes("Đà Nẵng")) shippingFee = 15000;
@@ -517,7 +566,8 @@ function renderCheckoutSummary() {
   }).join("");
 
   document.getElementById("summary-subtotal").textContent = subtotal.toLocaleString("vi-VN") + " ₫";
-  document.getElementById("summary-discount").textContent = "- " + appliedDiscount.toLocaleString("vi-VN") + " ₫";
+  const discountEl = document.getElementById("summary-discount");
+  if (discountEl) discountEl.textContent = "- " + appliedDiscount.toLocaleString("vi-VN") + " ₫";
   document.getElementById("summary-shipping").textContent = shippingFee === 0 ? "Miễn phí" : shippingFee.toLocaleString("vi-VN") + " ₫";
   document.getElementById("summary-total").textContent = finalTotal > 0 ? finalTotal.toLocaleString("vi-VN") + " ₫" : "Đang cập nhật giá";
 
@@ -538,7 +588,6 @@ paymentRadios.forEach(radio => {
   });
 });
 
-// ================= ĐẶT HÀNG & LƯU LỊCH SỬ ĐƠN HÀNG =================
 const orderModal = document.getElementById("order-modal");
 const orderModalBody = document.getElementById("order-modal-body");
 
@@ -595,7 +644,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   const orderItemsText = cart.map(item => `- ${item.name} (${item.option}) x ${item.quantity}: ${formatCurrency(item.price * item.quantity)}`).join("\n");
   const finalTotalText = document.getElementById("summary-total").textContent;
 
-  // Lưu vào lịch sử đơn hàng trên trình duyệt của khách
   const newOrder = {
     code: orderCode,
     date: new Date().toLocaleString("vi-VN"),
@@ -625,14 +673,12 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
         "Hình thức nhận": deliveryMethod,
         "Địa chỉ / Lớp": address,
         "Thanh toán": paymentMethod,
-        "Mã giảm giá": appliedPromoCode || "Không dùng",
         "Ghi chú": note || "Không có",
         "Sản phẩm": orderItemsText,
         "Tổng thanh toán": finalTotalText
       })
     });
   } catch (e) {
-    // Vẫn cho phép hoàn tất đơn nội bộ nếu khách mất mạng tạm thời
   } finally {
     cart = [];
     appliedDiscount = 0;
@@ -647,7 +693,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
   }
 });
 
-// Nút cuộn lên đầu trang
 const backToTopBtn = document.getElementById("back-to-top");
 window.addEventListener("scroll", () => {
   if (backToTopBtn) {
@@ -658,6 +703,5 @@ backToTopBtn?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Khởi chạy ban đầu
 renderProducts();
 updateCartUI();
