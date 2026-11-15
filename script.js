@@ -67,7 +67,7 @@ const products = [
   {
     id: 5,
     name: "Cúp Lưu Niệm (Mẫu 1)",
-    price: 0,
+    price: 200000,
     category: "trang-tri",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Phiên bản",
@@ -76,18 +76,7 @@ const products = [
     image: "cúp lưu niệm (1).jpg"
   },
   {
-    id: 6,
-    name: "Cúp Lưu Niệm (Mẫu 2)",
-    price: 0,
-    category: "trang-tri",
-    badge: "Kỷ niệm 20 năm",
-    optionLabel: "Phiên bản",
-    options: ["Tiêu chuẩn"],
-    description: "Cúp lưu niệm thiết kế độc quyền đánh dấu hành trình 20 năm kiến tạo DAU.",
-    image: "cúp lưu niệm.jpg"
-  },
-  {
-    id: 7,
+    id: 8,
     name: "Dây Đeo Thẻ DAU",
     price: 40000,
     category: "phu-kien",
@@ -98,7 +87,7 @@ const products = [
     image: "DÂY ĐEO THẺ - 40K.jpg"
   },
   {
-    id: 8,
+    id: 9,
     name: "Ghim Cài Áo Archi",
     price: 15000,
     category: "phu-kien",
@@ -109,7 +98,7 @@ const products = [
     image: "GHIM CÀI 15K.jpg"
   },
   {
-    id: 9,
+    id: 10,
     name: "Móc Khóa Len KTD (Thủ Công)",
     price: 50000,
     category: "moc-khoa",
@@ -138,7 +127,7 @@ const products = [
     image: "ktd1.png"
   },
   {
-    id: 10,
+    id: 11,
     name: "Móc Khóa Thông Điệp",
     price: 15000,
     category: "moc-khoa",
@@ -149,7 +138,7 @@ const products = [
     image: "Móc khóa thông điệp 15k_.jpg"
   },
   {
-    id: 11,
+    id: 12,
     name: "Móc Khóa Palet Gỗ",
     price: 10000,
     category: "moc-khoa",
@@ -187,7 +176,7 @@ const products = [
     ]
   },
   {
-    id: 16,
+    id: 15,
     name: "Móc Khóa Len Cookuu",
     price: 65000,
     category: "moc-khoa",
