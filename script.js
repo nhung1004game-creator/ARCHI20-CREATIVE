@@ -199,17 +199,22 @@ const products = [
       "Tranh hoa -75k .jpg",
       "Tranh hoa -75k.jpg",
       "Tranh hoa -70k .jpg"
+    ] 
   },
   {
-    id: 15,
-    name: "Quạt Cầm Tay ",
+    id: 15, // Sản phẩm mới được thêm vào hoàn hảo
+    name: "Quạt Cầm Tay",
     price: 20000,
     category: "trang-tri",
     badge: "Kỷ niệm 20 năm",
     optionLabel: "Phiên bản",
     options: ["Đỏ - Trắng DAU"],
     description: "Quạt cầm tay kỷ niệm 20 năm thành lập Trường Đại học Kiến trúc Đà Nẵng (2006 - 2026).",
-    image: "quat  .jpg"
+    image: "quat  .jpg",
+    fallbackImages: [
+      "quat  .jpg",
+      "quat.jpg"
+    ]
   }
 ];
 
@@ -217,7 +222,6 @@ let cart = JSON.parse(localStorage.getItem("aura_concept_cart")) || [];
 let wishlist = JSON.parse(localStorage.getItem("archi20_wishlist")) || [];
 let orderHistory = JSON.parse(localStorage.getItem("archi20_orders")) || [];
 
-// NÂNG CẤP: Đọc tham số URL để thiết lập bộ lọc mặc định khi tải trang
 const urlParams = new URLSearchParams(window.location.search);
 let currentCategory = urlParams.get('category') || "all";
 let searchKeyword = "";
@@ -237,7 +241,6 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("search-input");
 const sortSelect = document.getElementById("sort-select");
 
-// Đồng bộ giao diện nút bấm với tham số URL
 filterButtons.forEach(btn => {
   btn.classList.toggle("active", btn.getAttribute("data-category") === currentCategory);
 });
@@ -324,7 +327,7 @@ function showToast(message, isError = false) {
   if (!container) return;
   const toast = document.createElement("div");
   toast.className = "toast";
-  if (isError) toast.style.backgroundColor = "#d93025"; // Đỏ báo lỗi
+  if (isError) toast.style.backgroundColor = "#d93025";
   toast.textContent = message;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 2800);
@@ -471,7 +474,6 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
   const selectedOption = selectEl ? selectEl.value : (product.options[0] || "Tiêu chuẩn");
   const finalOptionPrice = getProductOptionPrice(product, selectedOption);
   
-  // NÂNG CẤP: Chặn mua hàng 0đ
   if (finalOptionPrice === 0) {
     showToast(`⛔ "${product.name}" đang cập nhật giá, chưa thể đặt hàng!`, true);
     return;
@@ -479,7 +481,6 @@ function addToCart(productId, selectElementId, closeModalAfter = false) {
 
   const existingItem = cart.find(item => item.id === productId && item.option === selectedOption);
 
-  // NÂNG CẤP: Giới hạn số lượng (Max 20/loại)
   if (existingItem && existingItem.quantity >= 20) {
     showToast(`⛔ Bạn chỉ được mua tối đa 20 sản phẩm loại này!`, true);
     return;
@@ -577,7 +578,6 @@ filterButtons.forEach(btn => {
     btn.classList.add("active");
     currentCategory = btn.getAttribute("data-category");
     
-    // NÂNG CẤP: Đẩy trạng thái bộ lọc lên URL để khách có thể share link
     const newUrl = new URL(window.location);
     newUrl.searchParams.set('category', currentCategory);
     window.history.pushState({}, '', newUrl);
@@ -746,7 +746,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
     total: finalTotalText
   };
 
-  // NÂNG CẤP: Bắt lỗi mạng. Nếu khách rớt mạng, đơn không gửi được thì KHÔNG xóa giỏ hàng
   try {
     const response = await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
       method: "POST",
@@ -768,7 +767,6 @@ document.getElementById("checkout-btn")?.addEventListener("click", async () => {
 
     if (!response.ok) throw new Error("Mạng lỗi");
 
-    // Chỉ lưu lịch sử và xóa giỏ khi đã gửi thành công
     orderHistory.unshift(newOrder);
     localStorage.setItem("archi20_orders", JSON.stringify(orderHistory));
     cart = [];
