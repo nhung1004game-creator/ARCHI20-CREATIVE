@@ -30,7 +30,7 @@ const products = [
     optionLabel: "Kích cỡ",
     options: ["S", "M", "L", "XL", "XXL"],
     description: "Áo Polo đồng phục & kỷ niệm Trường Đại học Kiến trúc Đà Nẵng (DAU), form chuẩn lịch sự.",
-    image: "ao-polo.jpg" // Đã rút gọn tên file cho chuẩn xác
+    image: "polo.jpg" // Đã rút gọn tên file cho chuẩn xác
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ const products = [
     description: "Ghim cài áo, balo, túi tote mang biểu tượng đặc trưng.",
     image: "GHIM CÀI 15K.jpg"
   },
-  {
+ {
     id: 9,
     name: "Móc Khóa Len KTD (Thủ Công)",
     price: 50000,
@@ -114,11 +114,11 @@ const products = [
       "Móc khóa KTD 2 (40K)": 40000
     },
     optionImages: {
-      "Móc khóa KTD 1 (50K)": "móc khóa KTD 1.jpg", // Đã xóa dấu cách thừa
+      "Móc khóa KTD 1 (50K)": "ktd1.jpg",
       "Móc khóa KTD 2 (40K)": "móc khóa ktd 2.png"
     },
     description: "Móc khóa len đan thủ công tỉ mỉ, đáng yêu với 2 mẫu lựa chọn.",
-    image: "móc khóa KTD 1.jpg"
+    image: "ktd1.jpg"
   },
   {
     id: 10,
