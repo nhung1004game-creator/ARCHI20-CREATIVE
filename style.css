@@ -621,3 +621,297 @@ body {
     padding: 20px;
   }
 }
+/* ================= GIAO DIỆN THANH TOÁN (CHECKOUT MODAL) ================= */
+.checkout-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 350;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.checkout-modal.active {
+  display: flex;
+}
+
+.checkout-modal-content {
+  background: var(--bg-cream);
+  width: 100%;
+  max-width: 920px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-header {
+  background: var(--primary-red);
+  color: #ffffff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-header h3 {
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+
+.checkout-header .close-btn {
+  color: #ffffff;
+}
+
+.checkout-body {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 28px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.checkout-section-title {
+  font-size: 1rem;
+  color: var(--primary-red);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+  margin-top: 4px;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #d5cbb8;
+  border-radius: 4px;
+  background: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus,
+.checkout-select:focus {
+  border-color: var(--primary-red);
+}
+
+/* Chọn phương thức thanh toán */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid #d5cbb8;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-option.active {
+  border-color: var(--primary-red);
+  background: #fff8f6;
+}
+
+.payment-option input[type="radio"] {
+  margin-top: 4px;
+  accent-color: var(--primary-red);
+}
+
+.payment-option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.payment-option-info strong {
+  font-size: 0.92rem;
+}
+
+.payment-option-info span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Hộp hiển thị mã QR */
+.qr-payment-box {
+  display: none;
+  margin-top: 14px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px dashed var(--primary-red);
+  border-radius: 6px;
+}
+
+.qr-payment-box.active {
+  display: block;
+}
+
+.qr-instruction {
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  color: #444;
+}
+
+.qr-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.qr-img {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.bank-details p {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.highlight-red {
+  color: var(--primary-red);
+  font-size: 1rem;
+}
+
+/* Cột phải: Tóm tắt đơn hàng */
+.checkout-right {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.checkout-summary-list {
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 4px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0ece1;
+  font-size: 0.88rem;
+}
+
+.summary-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-item-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.checkout-totals {
+  border-top: 2px solid var(--border-color);
+  padding-top: 14px;
+  margin-bottom: 18px;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.summary-line.total {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 8px;
+}
+
+.summary-line.total strong {
+  color: var(--primary-red);
+}
+
+.confirm-order-btn {
+  font-size: 1rem;
+  padding: 15px;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.back-to-cart-btn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: center;
+  padding: 6px;
+}
+
+.back-to-cart-btn:hover {
+  color: var(--primary-red);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .checkout-body {
+    grid-template-columns: 1fr;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+  .qr-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}

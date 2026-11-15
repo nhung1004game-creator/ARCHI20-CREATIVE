@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARCHI20 CREATIVE |  20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIÊN TẠO
-  </title>
+  <title>ARCHI20 CREATIVE | 20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIẾN TẠO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,7 +23,7 @@
   <!-- Banner chính -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="subtitle">DAU ẢCHITECTURE</p>
+      <p class="subtitle">DAU ARCHITECTURE</p>
       <h1>20 YEARS OF CREATIVITY - 20 NĂM HÀNH TRÌNH KIẾN TẠO</h1>
       <a href="#products" class="cta-btn">Khám phá ngay</a>
     </div>
@@ -34,23 +33,21 @@
   <section class="products-section" id="products">
     <h2 class="section-title">Danh Mục Sản Phẩm</h2>
 
-    <!-- Ô tìm kiếm sản phẩm mới thêm -->
+    <!-- Ô tìm kiếm sản phẩm -->
     <div class="search-container">
       <input 
         type="text" 
         id="search-input" 
-        placeholder="Tìm kiếm  áo,khăn,móc khóa , ..." 
+        placeholder="Tìm kiếm móc khóa, dây đeo, cúp, tranh..." 
       />
     </div>
 
-     <div class="filter-bar">
+    <!-- Thanh bộ lọc đã đồng bộ khớp 100% với script.js -->
+    <div class="filter-bar">
       <button class="filter-btn active" data-category="all">Tất cả</button>
       <button class="filter-btn" data-category="moc-khoa">Móc khóa Archi</button>
-      <button class="filter-btn" data-category="ao">Áo</button>
-      <button class="filter-btn" data-category="tap-chi">Lookbook & Artbook</button>
-      <button class="filter-btn" data-category="poster">Poster & Tranh</button>
-      <button class="filter-btn" data-category="day-deo">Dây đeo thẻ</button>
-    </div>
+      <button class="filter-btn" data-category="phu-kien">Phụ kiện & Kỷ niệm</button>
+      <button class="filter-btn" data-category="trang-tri">Trang trí & Tranh</button>
     </div>
 
     <div class="product-grid" id="product-list">
@@ -58,21 +55,18 @@
     </div>
   </section>
 
-  <!-- Cửa sổ Giỏ hàng (Modal) -->
-  <div class="cart-modal" id="cart-modal">
-    <!-- Cửa sổ Chi tiết sản phẩm (Product Modal) -->
+  <!-- Cửa sổ Chi tiết sản phẩm (Product Modal) -->
   <div class="product-modal" id="product-modal">
     <div class="product-modal-content">
       <button class="close-detail-btn" id="close-product-modal">&times;</button>
       <div class="product-modal-body" id="product-modal-body">
-        <!-- Nội dung chi tiết sản phẩm sẽ được nạp tự động từ script.js -->
+        <!-- Nội dung chi tiết sản phẩm nạp tự động từ script.js -->
       </div>
     </div>
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <!-- Cửa sổ Giỏ hàng (Cart Modal) -->
+  <div class="cart-modal" id="cart-modal">
     <div class="cart-content">
       <div class="cart-header">
         <h3>Giỏ Hàng Của Bạn</h3>
@@ -84,7 +78,113 @@
       </div>
 
       <div class="cart-footer">
-        <!-- Form nhập thông tin giao hàng mới thêm -->
+        <div class="total-row">
+          <span>Tạm tính:</span>
+          <strong id="cart-total">0 ₫</strong>
+        </div>
+        <button class="checkout-btn" id="open-checkout-btn">Tiến Hành Thanh Toán</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cửa sổ Thanh Toán Chuyên Nghiệp (Checkout Modal) -->
+  <div class="checkout-modal" id="checkout-modal">
+    <div class="checkout-modal-content">
+      <div class="checkout-header">
+        <h3>Thanh Toán Đơn Hàng — ARCHI20 CREATIVE</h3>
+        <button class="close-btn" id="close-checkout-btn">&times;</button>
+      </div>
+
+      <div class="checkout-body">
+        <!-- Cột trái: Thông tin người nhận & Phương thức thanh toán -->
+        <div class="checkout-left">
+          <h4 class="checkout-section-title">1. Thông Tin Nhận Hàng</h4>
+          <div class="checkout-form">
+            <div class="form-row-2">
+              <input type="text" id="cust-name" placeholder="Họ và tên người nhận *" required>
+              <input type="tel" id="cust-phone" placeholder="Số điện thoại liên hệ *" required>
+            </div>
+            <input type="email" id="cust-email" placeholder="Email nhận xác nhận đơn hàng (Không bắt buộc)">
+            
+            <label class="field-label">Hình thức nhận hàng:</label>
+            <select id="delivery-method" class="checkout-select">
+              <option value="Nhận tại sảnh Khoa Kiến trúc - DAU (Miễn phí)">Nhận tại sảnh Khoa Kiến trúc - DAU (Miễn phí ship)</option>
+              <option value="Giao hàng tận nơi tại Đà Nẵng">Giao hàng tận nơi (Nội thành Đà Nẵng)</option>
+              <option value="Giao hàng toàn quốc (ViettelPost / GHTK)">Giao hàng toàn quốc</option>
+            </select>
+
+            <textarea id="cust-address" rows="2" placeholder="Ghi rõ Lớp/MSSV (nếu nhận tại trường) hoặc Địa chỉ chi tiết *" required></textarea>
+            <input type="text" id="cust-note" placeholder="Ghi chú thêm (Ví dụ: Giao giờ hành chính, gói quà...)">
+          </div>
+
+          <h4 class="checkout-section-title" style="margin-top: 20px;">2. Phương Thức Thanh Toán</h4>
+          <div class="payment-methods">
+            <label class="payment-option active">
+              <input type="radio" name="payment-method" value="Thanh toán khi nhận hàng (COD)" checked>
+              <div class="payment-option-info">
+                <strong>Thanh toán khi nhận hàng (COD)</strong>
+                <span>Trả tiền mặt trực tiếp khi nhận ấn phẩm</span>
+              </div>
+            </label>
+
+            <label class="payment-option">
+              <input type="radio" name="payment-method" value="Chuyển khoản ngân hàng (Mã QR)">
+              <div class="payment-option-info">
+                <strong>Chuyển khoản ngân hàng (VietQR)</strong>
+                <span>Quét mã QR tự động điền sẵn số tiền và nội dung</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Khung hiển thị mã QR khi chọn Chuyển khoản -->
+          <div class="qr-payment-box" id="qr-payment-box">
+            <p class="qr-instruction">Quét mã QR bằng ứng dụng Ngân hàng hoặc MoMo:</p>
+            <div class="qr-content">
+              <img id="vietqr-img" src="" alt="Mã QR Thanh Toán" class="qr-img">
+              <div class="bank-details">
+                <p>Ngân hàng: <strong>MB Bank (Quân Đội)</strong></p>
+                <p>Số tài khoản: <strong>0905123456</strong></p>
+                <p>Chủ TK: <strong>PHAM HONG NHUNG</strong></p>
+                <p>Số tiền: <strong id="qr-amount" class="highlight-red">0 ₫</strong></p>
+                <p>Nội dung CK: <strong id="qr-memo">ARCHI20</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột phải: Tóm tắt đơn hàng -->
+        <div class="checkout-right">
+          <h4 class="checkout-section-title">Tóm Tắt Đơn Hàng</h4>
+          <div class="checkout-summary-list" id="checkout-summary-list">
+            <!-- Nạp tự động từ script.js -->
+          </div>
+
+          <div class="checkout-totals">
+            <div class="summary-line">
+              <span>Tạm tính:</span>
+              <span id="summary-subtotal">0 ₫</span>
+            </div>
+            <div class="summary-line">
+              <span>Phí vận chuyển:</span>
+              <span id="summary-shipping">Miễn phí</span>
+            </div>
+            <div class="summary-line total">
+              <span>Tổng thanh toán:</span>
+              <strong id="summary-total">0 ₫</strong>
+            </div>
+          </div>
+
+          <button class="checkout-btn confirm-order-btn" id="checkout-btn">
+            HOÀN TẤT ĐẶT HÀNG
+          </button>
+          <button class="back-to-cart-btn" id="back-to-cart-btn">
+            &larr; Quay lại sửa giỏ hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="cart-footer">
         <div class="shipping-form">
           <h4>Thông Tin Giao Hàng</h4>
           <input type="text" id="cust-name" placeholder="Họ và tên người nhận *" required>
@@ -100,8 +200,9 @@
       </div>
     </div>
   </div>
-       <!-- Chân trang phong cách ARCHI20 - DAU -->
-   <footer class="site-footer">
+
+  <!-- Chân trang phong cách ARCHI20 - DAU -->
+  <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-col">
         <h3>ARCHI20 CREATIVE</h3>
